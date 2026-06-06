@@ -853,7 +853,7 @@
         // ==========================================================================
         // MOTOR DE EXPORTACIÓN VECTORIAL (CON FILTRADO CONDICIONAL DE TÍTULOS)
         // ==========================================================================
-        if (btnExportPdf) {
+if (btnExportPdf) {
             btnExportPdf.addEventListener('click', async () => { 
                 const originalText = btnExportPdf.innerHTML;
                 btnExportPdf.disabled = true;
@@ -958,7 +958,8 @@
                         }
 
                         // CONFIGURACIÓN DE MEDIDAS DE LA MATRIZ TÁCTICA
-                        const startX = 155;
+                        // Corregido: Ajustado de 155 a 91 para desplazar las fichas 4 columnas a la izquierda
+                        const startX = 91; 
                         const startY = 150;
                         const cellW = 16.0; 
                         const cellH = 16.0;
