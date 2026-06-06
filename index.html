@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banda Independiente Sabá - Sitio Oficial</title>
+    <!-- Tailwind CSS v4 CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Importación única de la fuente Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Animación para el carrusel infinito de la galería */
+        @keyframes scrollHorizontal {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(calc(-280px * 21 - 1.25rem * 21)); }
+        }
+        .carrusel-track {
+            display: flex;
+            width: max-content;
+            animation: scrollHorizontal 50s linear infinite;
+        }
+        .carrusel-track:hover {
+            animation-play-state: paused;
+        }
+    </style>
+</head>
+<!-- Toda la página forzada por herencia nativa a usar únicamente la fuente Poppins -->
+<body class="bg-gray-50 text-slate-800 font-['Poppins'] overflow-x-hidden antialiased flex flex-col min-h-screen">
+
+    <!-- BARRA DE NAVEGACIÓN -->
+    <nav class="bg-gradient-to-r from-[#001e99] via-[#0033ff] to-[#001177] text-white sticky top-0 z-50 shadow-xl px-6 py-3 flex justify-between items-center transition-all duration-300">
+        <div class="flex items-center space-x-3">
+            <img src="IMAGENES/logobisblanco.PNG" alt="Logo BIS" class="h-12 w-auto object-contain filter drop-shadow-md">
+            <span class="font-bold text-lg tracking-wide hidden sm:inline bg-gradient-to-r from-white to-gray-200 bg-clip-text text-transparent lowercase">banda independiente sabá</span>
+        </div>
+        
+        <div class="hidden md:flex items-center bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-6 py-1.5 shadow-[0_8px_32px_0_rgba(0,0,0,0.2)] gap-6 font-semibold">
+            <a href="#inicio" class="hover:text-amber-400 transition-colors duration-300 text-sm">Inicio</a>
+            <a href="#historia" class="hover:text-amber-400 transition-colors duration-300 text-sm">Historia</a>
+            <a href="#logros" class="hover:text-amber-400 transition-colors duration-300 text-sm">Trayectoria</a>
+            <a href="#multimedia" class="hover:text-amber-400 transition-colors duration-300 text-sm">Galería</a>
+            
+            <div class="h-4 w-[1px] bg-white/20"></div>
+
+<a href="MODULOS/index.html" class="text-amber-400 py-3 font-extrabold flex items-center justify-center gap-3">
+    <div class="relative">
+        <i class="fa-regular fa-file-lines"></i>
+        <i class="fa-solid fa-star text-[6px] absolute top-[1px] right-[-2px]"></i>
+    </div>
+    CREAR FIGURAS
+</a>
+
+
+        <button class="md:hidden text-white focus:outline-none" id="menu-btn">
+            <i class="fa-solid fa-bars text-2xl"></i>
+        </button>
+    </nav>
+
+    <!-- MENÚ MÓVIL -->
+    <div id="mobile-menu" class="hidden fixed top-[68px] left-0 w-full bg-gradient-to-b from-[#0033ff] to-[#001177] z-40 p-6 shadow-xl flex flex-col space-y-4 font-semibold text-center md:hidden border-t border-blue-500/30">
+        <a href="#inicio" class="text-white hover:text-amber-400 py-2">Inicio</a>
+        <a href="#historia" class="text-white hover:text-amber-400 py-2">Historia</a>
+        <a href="#logros" class="text-white hover:text-amber-400 py-2">Trayectoria</a>
+        <a href="#multimedia" class="text-white hover:text-amber-400 py-2">Galería</a>
+        
+        <a href="#crear-figuras" class="text-amber-400 py-3 font-extrabold flex items-center justify-center gap-2 border border-white/10 rounded-xl bg-white/5 backdrop-blur-sm">
+            <div class="relative">
+                <i class="fa-regular fa-file-lines"></i>
+                <i class="fa-solid fa-star text-[6px] absolute top-[1px] right-[-2px]"></i>
+            </div>
+            CREAR FIGURAS
+        </a>
+    </div>
+
+    <!-- CUERPO PRINCIPAL -->
+    <main class="flex-grow">
+        <!-- SECCIÓN DE INICIO (HERO) -->
+        <header id="inicio" class="relative h-[85vh] bg-[#001133] text-white flex items-center justify-center text-center overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-b from-[#001155]/90 via-[#001e99]/75 to-gray-50/20 z-10"></div>
+            <div class="absolute inset-0 w-full h-full bg-cover bg-center opacity-45 blur-xs scale-100 transition-transform duration-700" style="background-image: url('IMAGENES/imagen4.jpeg'); background-position: center 25%;"></div>
+
+            <div class="relative z-20 max-w-4xl px-6" data-aos="zoom-out" data-aos-duration="1200">
+                <span class="bg-gradient-to-r from-[#0033ff] to-[#0011aa] text-white text-xs md:text-sm font-bold uppercase tracking-[0.3em] px-5 py-2 rounded-full mb-6 inline-block shadow-lg border border-blue-400/20">Sabá, Colón, Honduras</span>
+                <h1 class="text-4xl md:text-7xl font-black tracking-tight mb-6 uppercase leading-tight">
+                    BANDA INDEPENDIENTE <br><span class="text-amber-400 drop-shadow-[0_2px_12px_rgba(251,191,36,0.6)]">SABÁ</span>
+                </h1>
+                <p class="text-lg md:text-2xl font-light text-gray-100 mb-8 max-w-2xl mx-auto leading-relaxed drop-shadow-md">
+                    Caracterizados por un <strong class="text-white font-semibold">ritmo único</strong> y un cariño inigualable que hace vibrar cada rincón de nuestra patria.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <a href="#historia" class="bg-gradient-to-r from-[#0033ff] to-[#0022cc] hover:from-blue-700 hover:to-blue-800 text-white font-bold px-8 py-3.5 rounded-xl shadow-lg transition-all transform hover:-translate-y-1">Conócenos</a>
+                    <a href="MODULOS/index.html" class="border-2 border-white/80 hover:border-amber-400 text-white hover:text-amber-400 font-bold px-8 py-3.5 rounded-xl transition-all bg-white/5 backdrop-blur-sm">Módulo Figuras</a>
+                </div>
+            </div>
+        </header>
+
+        <!-- SECCIÓN HISTORIA -->
+        <section id="historia" class="py-24 bg-white relative">
+            <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+                <div data-aos="fade-right" data-aos-duration="1000">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-12 h-1.5 bg-[#0033ff]"></div>
+                        <span class="text-[#0033ff] font-bold uppercase tracking-wider text-sm">Nuestra Identidad</span>
+                    </div>
+                    <h2 class="text-3xl md:text-5xl font-extrabold mb-6 tracking-tight leading-tight text-slate-900">Un Sentimiento Hecho Ritmo</h2>
+                    <p class="text-gray-600 text-lg leading-relaxed mb-6">
+                        Nacidos en el corazón de Sabá, Colón, nos hemos consolidado como una de las agrupaciones musicales más queridas y respetadas de la región. No solo hacemos música; transmitimos energía, disciplina y pasión en cada paso.
+                    </p>
+                    <p class="text-gray-600 text-lg leading-relaxed">
+                        Nuestra identidad se define por la entrega de nuestros integrantes y el apoyo incondicional de un público que nos acompaña donde sea que nos presentemos de manera inigualable.
+                    </p>
+                </div>
+                
+                <div class="relative bg-slate-100 h-[420px] rounded-2xl shadow-2xl overflow-hidden group border border-gray-150" data-aos="fade-left" data-aos-duration="1000">
+                    <div class="absolute inset-0 bg-[#0033ff]/5 group-hover:bg-transparent transition-colors duration-500 z-10"></div>
+                    <div class="w-full h-full bg-cover bg-center transform group-hover:scale-105 transition-transform duration-700" style="background-image: url('IMAGENES/imagen2.jpg');"></div>
+                </div>
+            </div>
+
+            <!-- TABLA DE EVENTOS FECCAH -->
+            <div class="max-w-6xl mx-auto px-6 mt-24 border-t border-gray-100 pt-16">
+                <div class="mb-10" data-aos="fade-up">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-12 h-1.5 bg-amber-400"></div>
+                        <span class="text-[#0033ff] font-bold uppercase tracking-wider text-sm">Torneo Oficial FECCAH 2026</span>
+                    </div>
+                    <h2 class="text-3xl md:text-4xl font-extrabold mb-4 tracking-tight text-slate-900">Calendario 2026</h2>
+                    <p class="text-gray-600 text-lg">Este es nuestro calendario de eventos para el año 2026 en la Zona Valle del Aguán.</p>
+                </div>
+
+                <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-100" data-aos="fade-up" data-aos-duration="1000">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse min-w-[800px]">
+                            <thead>
+                                <tr class="bg-gradient-to-r from-[#001e99] to-[#001177] text-white uppercase text-xs tracking-wider font-semibold">
+                                    <th class="py-4 px-4 text-center w-12">No.</th>
+                                    <th class="py-4 px-6">Organizador</th>
+                                    <th class="py-4 px-6">Sede</th>
+                                    <th class="py-4 px-4 text-center">Hora</th>
+                                    <th class="py-4 px-4 text-center">Día</th>
+                                    <th class="py-4 px-6 text-center">Fecha</th>
+                                    <th class="py-4 px-6 text-center">Tipo de Evento</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-100 text-sm">
+                                <!-- Fila 1 -->
+                                <tr class="hover:bg-amber-50/60 bg-amber-50/20 font-semibold border-y-2 border-amber-400/30 text-amber-700 transition-colors">
+                                    <td class="py-3.5 px-4 font-extrabold text-center">1</td>
+                                    <td class="py-3.5 px-6 font-extrabold">NACIONAL ZONA OCCIDENTE BANDA RAMON ROSA</td>
+                                    <td class="py-3.5 px-6 font-medium text-slate-600">GRACIAS</td>
+                                    <td class="py-3.5 px-4 text-center text-slate-600">8:30 a.m.</td>
+                                    <td class="py-3.5 px-4 text-center text-slate-500">Dom</td>
+                                    <td class="py-3.5 px-6 text-center font-bold text-slate-900">12-jul</td>
+                                    <td class="py-3.5 px-6 text-center"><span class="px-3 py-1 text-xs font-bold bg-green-100 text-green-700 rounded-full border border-green-200">APROBADO</span></td>
+                                </tr>
+                                <!-- Fila 2 -->
+                                <tr class="hover:bg-blue-50/40 transition-colors">
+                                    <td class="py-3.5 px-4 font-bold text-center text-slate-400">2</td>
+                                    <td class="py-3.5 px-6 font-semibold text-slate-800">FESTIVAL INAUGURAL FECCAH RVA</td>
+                                    <td class="py-3.5 px-6 font-medium text-amber-600 italic">POR DEFINIR</td>
+                                    <td class="py-3.5 px-4 text-center text-slate-600">9:00 a.m.</td>
+                                    <td class="py-3.5 px-4 text-center text-slate-500">Dom</td>
+                                    <td class="py-3.5 px-6 text-center font-bold text-slate-900">19-jul</td>
+                                    <td class="py-3.5 px-6 text-center"><span class="px-3 py-1 text-xs font-bold bg-green-100 text-green-700 rounded-full border border-green-200">APROBADO</span></td>
+                                </tr>
+                                <!-- Fila 3 -->
+                                <tr class="hover:bg-amber-50/60 bg-amber-50/20 font-semibold border-y-2 border-amber-400/30 text-amber-700 transition-colors">
+                                    <td class="py-3.5 px-4 font-extrabold text-center">3</td>
+                                    <td class="py-3.5 px-6 font-extrabold">NACIONAL ZONA CENTRO SUR ORIENTE INST. TECNICO HONDURAS</td>
+                                    <td class="py-3.5 px-6 font-medium text-slate-600">TEGUCIGALPA</td>
+                                    <td class="py-3.5 px-4 text-center text-slate-600">8:30 a.m.</td>
+                                    <td class="py-3.5 px-4 text-center text-slate-500">Dom</td>
+                                    <td class="py-3.5 px-6 text-center font-bold text-slate-900">16-ago</td>
+                                    <td class="py-3.5 px-6 text-center"><span class="px-3 py-1 text-xs font-bold bg-green-100 text-green-700 rounded-full border border-green-200">APROBADO</span></td>
+                                </tr>
+                                <!-- Fila 4 -->
+                                <tr class="hover:bg-amber-50/40 bg-amber-50/10 transition-colors border-y border-amber-100">
+                                    <td class="py-3.5 px-4 font-bold text-center text-amber-600">4</td>
+                                    <td class="py-3.5 px-6 font-semibold text-slate-800">INSTITUTO LICEO HONDUREÑO INSULAR (APOYO A ZONA INSULAR)</td>
+                                    <td class="py-3.5 px-6 font-bold text-amber-600">ROATAN</td>
+                                    <td class="py-3.5 px-4 text-center text-slate-600 font-medium">3:00 p.m.</td>
+                                    <td class="py-3.5 px-4 text-center text-slate-500">Sab</td>
+                                    <td class="py-3.5 px-6 text-center font-bold text-slate-900">22-ago</td>
+                                    <td class="py-3.5 px-6 text-center"><span class="px-3 py-1 text-xs font-bold bg-green-100 text-green-700 rounded-full border border-green-200">APROBADO</span></td>
+                                </tr>
+                                <!-- Fila 5 -->
+                                <tr class="hover:bg-blue-50/40 transition-colors">
+                                    <td class="py-3.5 px-4 font-bold text-center text-slate-400">5</td>
+                                    <td class="py-3.5 px-6 font-semibold text-slate-800">INSTITUTO FROYLAN TURCIOS</td>
+                                    <td class="py-3.5 px-6 font-medium text-slate-600">TOCOA</td>
+                                    <td class="py-3.5 px-4 text-center text-slate-600">9:00 a.m.</td>
+                                    <td class="py-3.5 px-4 text-center text-slate-500">Dom</td>
+                                    <td class="py-3.5 px-6 text-center font-bold text-slate-900">30-ago</td>
+                                    <td class="py-3.5 px-6 text-center"><span class="px-3 py-1 text-xs font-bold bg-green-100 text-green-700 rounded-full border border-green-200">APROBADO</span></td>
+                                </tr>
+                                <!-- Fila 6 -->
+                                <tr class="hover:bg-blue-50/40 bg-blue-50/20 transition-colors">
+                                    <td class="py-3.5 px-4 font-bold text-center text-slate-400">6</td>
+                                    <td class="py-3.5 px-6 font-semibold text-slate-800">C.E.B. BENITO JUAREZ</td>
+                                    <td class="py-3.5 px-6 font-medium text-slate-600">RIGORES</td>
+                                    <td class="py-3.5 px-4 text-center text-slate-600">9:00 a.m.</td>
+                                    <td class="py-3.5 px-4 text-center text-slate-500">Dom</td>
+                                    <td class="py-3.5 px-6 text-center font-bold text-slate-900">6-sep</td>
+                                    <td class="py-3.5 px-6 text-center"><span class="px-3 py-1 text-xs font-bold bg-green-100 text-green-700 rounded-full border border-green-200">APROBADO</span></td>
+                                </tr>
+                                <!-- Fila 7 -->
+                                <tr class="hover:bg-blue-50/40 transition-colors">
+                                    <td class="py-3.5 px-4 font-bold text-center text-slate-400">7</td>
+                                    <td class="py-3.5 px-6 font-semibold text-slate-800">CELEBRACION DE LOS DESFILES PATRIOS</td>
+                                    <td class="py-3.5 px-6 font-medium text-slate-400 italic">---</td>
+                                    <td class="py-3.5 px-4 text-center text-slate-600">9:00 a.m.</td>
+                                    <td class="py-3.5 px-4 text-center text-slate-500">Dom</td>
+                                    <td class="py-3.5 px-6 text-center font-bold text-slate-900">13-sep</td>
+                                    <td class="py-3.5 px-6 text-center"><span class="px-3 py-1 text-xs font-bold bg-green-100 text-green-700 rounded-full border border-green-200">APROBADO</span></td>
+                                </tr>
+                                <!-- Fila 8 -->
+                                <tr class="hover:bg-amber-50/40 bg-amber-50/10 transition-colors border-y border-amber-100">
+                                    <td class="py-3.5 px-4 font-bold text-center text-amber-600">8</td>
+                                    <td class="py-3.5 px-6 font-semibold text-slate-800">ISNTITUTO DEPARTAMENTAL HONDURAS (APOYO A ZONA INSULAR)</td>
+                                    <td class="py-3.5 px-6 font-bold text-amber-600">ROATAN</td>
+                                    <td class="py-3.5 px-4 text-center text-slate-600 font-medium">3:00 p.m.</td>
+                                    <td class="py-3.5 px-4 text-center text-slate-500">Sab</td>
+                                    <td class="py-3.5 px-6 text-center font-bold text-slate-900">19-sep</td>
+                                    <td class="py-3.5 px-6 text-center"><span class="px-3 py-1 text-xs font-bold bg-green-100 text-green-700 rounded-full border border-green-200">APROBADO</span></td>
+                                </tr>
+                                <!-- Fila 9 -->
+                                <tr class="hover:bg-amber-50/60 bg-amber-50/20 font-semibold border-y-2 border-amber-400/30 text-amber-700 transition-colors">
+                                    <td class="py-3.5 px-4 font-extrabold text-center">9</td>
+                                    <td class="py-3.5 px-6 font-extrabold">NACIONAL DE ZONA PRINCIPAL BANDA MARCIAL LATINOS DE SULA</td>
+                                    <td class="py-3.5 px-6 font-medium text-slate-600">SAN PEDRO SULA</td>
+                                    <td class="py-3.5 px-4 text-center text-slate-600">8:30 a.m.</td>
+                                    <td class="py-3.5 px-4 text-center text-slate-500">Dom</td>
+                                    <td class="py-3.5 px-6 text-center font-bold text-slate-900">20-sep</td>
+                                    <td class="py-3.5 px-6 text-center"><span class="px-3 py-1 text-xs font-bold bg-green-100 text-green-700 rounded-full border border-green-200">APROBADO</span></td>
+                                </tr>
+                                <!-- Fila 10 -->
+                                <tr class="hover:bg-blue-50/40 transition-colors">
+                                    <td class="py-3.5 px-4 font-bold text-center text-slate-400">10</td>
+                                    <td class="py-3.5 px-6 font-semibold text-slate-800">IDEPENDIENTE TRUJILLO</td>
+                                    <td class="py-3.5 px-6 font-medium text-slate-600">TRUJILLO</td>
+                                    <td class="py-3.5 px-4 text-center text-slate-600">8:30 a.m.</td>
+                                    <td class="py-3.5 px-4 text-center text-slate-500">Dom</td>
+                                    <td class="py-3.5 px-6 text-center font-bold text-slate-900">27-sep</td>
+                                    <td class="py-3.5 px-6 text-center"><span class="px-3 py-1 text-xs font-bold bg-green-100 text-green-700 rounded-full border border-green-200">APROBADO</span></td>
+                                </tr>
+                                <!-- Fila 11 -->
+                                <tr class="hover:bg-blue-50/40 bg-blue-50/20 transition-colors">
+                                    <td class="py-3.5 px-4 font-bold text-center text-slate-400">11</td>
+                                    <td class="py-3.5 px-6 font-semibold text-slate-800">INDEPENDIENETE BONITEÑA</td>
+                                    <td class="py-3.5 px-6 font-medium text-slate-600">BONITO O.</td>
+                                    <td class="py-3.5 px-4 text-center text-slate-600">9:00 a.m.</td>
+                                    <td class="py-3.5 px-4 text-center text-slate-500">Dom</td>
+                                    <td class="py-3.5 px-6 text-center font-bold text-slate-900">4-oct</td>
+                                    <td class="py-3.5 px-6 text-center"><span class="px-3 py-1 text-xs font-bold bg-green-100 text-green-700 rounded-full border border-green-200">APROBADO</span></td>
+                                </tr>
+                                <!-- Fila 12 -->
+                                <tr class="hover:bg-blue-50/40 transition-colors">
+                                    <td class="py-3.5 px-4 font-bold text-center text-slate-400">12</td>
+                                    <td class="py-3.5 px-6 font-bold text-slate-800 not-italic">FERIADO MORAZANICO</td>
+                                    <td class="py-3.5 px-6 font-medium italic text-slate-400">---</td>
+                                    <td class="py-3.5 px-4 text-center text-slate-600">9:00 a.m.</td>
+                                    <td class="py-3.5 px-4 text-center text-slate-500">Dom</td>
+                                    <td class="py-3.5 px-6 text-center font-bold text-slate-900 not-italic">11-oct</td>
+                                    <td class="py-3.5 px-6 text-center not-italic"><span class="px-3 py-1 text-xs font-bold bg-green-100 text-green-700 rounded-full border border-green-200">APROBADO</span></td>
+                                </tr>
+                                <!-- Fila 13 - INDEPENDIENTE SABÁ -->
+                                <tr class="hover:bg-blue-50/60 bg-blue-50/40 font-semibold border-y-2 border-blue-400 text-[#0033ff] transition-colors">
+                                    <td class="py-4 px-4 font-extrabold text-center text-lg">13</td>
+                                    <td class="py-4 px-6 font-extrabold flex items-center gap-2 tracking-wider text-sm uppercase">
+                                        <i class="fa-solid fa-star text-amber-500 animate-pulse"></i> INDEPENDIENTE SABÁ
+                                    </td>
+                                    <td class="py-4 px-6 font-extrabold tracking-wider text-sm">SABÁ</td>
+                                    <td class="py-4 px-4 text-center font-bold">9:00 a.m.</td>
+                                    <td class="py-4 px-4 text-center text-slate-600">Dom</td>
+                                    <td class="py-4 px-6 text-center font-extrabold text-base text-amber-500 drop-shadow-[0_1px_4px_rgba(251,191,36,0.4)]">18-oct</td>
+                                    <td class="py-4 px-6 text-center"><span class="px-4 py-1.5 text-xs font-extrabold bg-[#0033ff] text-white rounded-full shadow-sm border border-blue-600">APROBADO</span></td>
+                                </tr>
+                                <!-- Fila 14 -->
+                                <tr class="hover:bg-amber-50/60 bg-amber-50/20 font-semibold border-y-2 border-amber-400/30 text-amber-700 transition-colors">
+                                    <td class="py-3.5 px-4 font-extrabold text-center">14</td>
+                                    <td class="py-3.5 px-6 font-extrabold">NACIONAL DE ZONA AGUAN INST. 19 DE DICIEMBRE</td>
+                                    <td class="py-3.5 px-6 font-medium text-slate-600">SONAGUERA</td>
+                                    <td class="py-3.5 px-4 text-center text-slate-600">8:30 a.m.</td>
+                                    <td class="py-3.5 px-4 text-center text-slate-500">Dom</td>
+                                    <td class="py-3.5 px-6 text-center font-bold text-slate-900">25-oct</td>
+                                    <td class="py-3.5 px-6 text-center"><span class="px-3 py-1 text-xs font-bold bg-green-100 text-green-700 rounded-full border border-green-200">APROBADO</span></td>
+                                </tr>
+                                <!-- Fila 15 -->
+                                <tr class="hover:bg-blue-50/40 transition-colors">
+                                    <td class="py-3.5 px-4 font-bold text-center text-slate-400">15</td>
+                                    <td class="py-3.5 px-6 font-semibold text-slate-800">INSTITUTO MGA</td>
+                                    <td class="py-3.5 px-6 font-medium text-slate-600">COROZAL</td>
+                                    <td class="py-3.5 px-4 text-center text-slate-600">9:00 a.m.</td>
+                                    <td class="py-3.5 px-4 text-center text-slate-500">Dom</td>
+                                    <td class="py-3.5 px-6 text-center font-bold text-slate-900">1-nov</td>
+                                    <td class="py-3.5 px-6 text-center"><span class="px-3 py-1 text-xs font-bold bg-green-100 text-green-700 rounded-full border border-green-200">APROBADO</span></td>
+                                </tr>
+                                <!-- Fila 16 -->
+                                <tr class="hover:bg-gray-200/50 bg-gray-100/50 text-slate-700 italic font-medium border-b-2 border-gray-300">
+                                    <td class="py-3.5 px-4 font-bold text-center text-slate-500">16</td>
+                                    <td class="py-3.5 px-6 font-bold text-slate-800 not-italic">DESCANSO</td>
+                                    <td class="py-3.5 px-6 text-slate-400">---</td>
+                                    <td class="py-3.5 px-4 text-center text-slate-500">9:00 a.m.</td>
+                                    <td class="py-3.5 px-4 text-center text-slate-400">Dom</td>
+                                    <td class="py-3.5 px-6 text-center font-bold text-slate-900 not-italic">8-nov</td>
+                                    <td class="py-3.5 px-6 text-center not-italic"><span class="px-3 py-1 text-xs font-bold bg-green-100 text-green-700 rounded-full border border-green-200">APROBADO</span></td>
+                                </tr>
+                                <!-- Fila 17 -->
+                                <tr class="hover:bg-purple-100/60 bg-purple-50/90 font-semibold border-y-2 border-purple-400 text-purple-900 transition-colors">
+                                    <td class="py-4 px-4 font-extrabold text-center text-base">17</td>
+                                    <td class="py-4 px-6 font-extrabold tracking-wider flex items-center gap-2 text-sm uppercase">
+                                        <i class="fa-solid fa-trophy text-purple-600 animate-bounce"></i> GRAN FINAL NACIONAL
+                                    </td>
+                                    <td class="py-4 px-6 font-medium italic">POR DEFINIR</td>
+                                    <td class="py-4 px-4 text-center">8:30 a.m.</td>
+                                    <td class="py-4 px-4 text-center">Dom</td>
+                                    <td class="py-4 px-6 text-center font-extrabold text-black text-base">15-nov</td>
+                                    <td class="py-4 px-6 text-center"><span class="px-3 py-1 text-xs font-bold bg-green-100 text-green-700 rounded-full border border-green-200">APROBADO</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="bg-slate-50 p-4 border-t border-slate-100 text-xs text-slate-500 flex items-center gap-2">
+                        <strong class="text-[#0033ff]">Observaciones:</strong> 
+                        <span>La planificación del torneo sigue su curso oficial bajo los estándares estipulados de la FECCAH.</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GALERÍA MULTIMEDIA -->
+            <div class="max-w-6xl mx-auto px-6 mt-24 border-t border-gray-100 pt-16" id="multimedia">
+                <div class="mb-10" data-aos="fade-up">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-12 h-1.5 bg-amber-400"></div>
+                        <span class="text-[#0033ff] font-bold uppercase tracking-wider text-sm">Recuerdos Recientes</span>
+                    </div>
+                    <h2 class="text-3xl md:text-4xl font-extrabold mb-4 tracking-tight text-slate-900">Galeria Carnaval Del Banano 2026</h2>
+<p class="text-gray-600 text-lg">Revive los mejores momentos de nuestra participación en el carnaval de este año.</p>
+
+                </div>
+
+                <div class="relative w-full overflow-hidden bg-white rounded-2xl shadow-xl p-6 border border-slate-100" data-aos="fade-up" data-aos-duration="1000">
+                    <div class="carrusel-track gap-5">
+                        <img src="IMAGENES/imagen5.jpg" alt="Carnaval 5" class="w-[280px] h-[200px] object-cover rounded-xl shadow-md border border-gray-100 shrink-0">
+                        <img src="IMAGENES/imagen6.jpg" alt="Carnaval 6" class="w-[280px] h-[200px] object-cover rounded-xl shadow-md border border-gray-100 shrink-0">
+                        <img src="IMAGENES/imagen7.jpg" alt="Carnaval 7" class="w-[280px] h-[200px] object-cover rounded-xl shadow-md border border-gray-100 shrink-0">
+                        <img src="IMAGENES/imagen8.jpg" alt="Carnaval 8" class="w-[280px] h-[200px] object-cover rounded-xl shadow-md border border-gray-100 shrink-0">
+                        <img src="IMAGENES/imagen9.jpg" alt="Carnaval 9" class="w-[280px] h-[200px] object-cover rounded-xl shadow-md border border-gray-100 shrink-0">
+                        <img src="IMAGENES/imagen10.jpg" alt="Carnaval 10" class="w-[280px] h-[200px] object-cover rounded-xl shadow-md border border-gray-100 shrink-0">
+                        <img src="IMAGENES/imagen11.jpg" alt="Carnaval 11" class="w-[280px] h-[200px] object-cover rounded-xl shadow-md border border-gray-100 shrink-0">
+                        <img src="IMAGENES/imagen12.jpg" alt="Carnaval 12" class="w-[280px] h-[200px] object-cover rounded-xl shadow-md border border-gray-100 shrink-0">
+                        <img src="IMAGENES/imagen13.jpg" alt="Carnaval 13" class="w-[280px] h-[200px] object-cover rounded-xl shadow-md border border-gray-100 shrink-0">
+                        <img src="IMAGENES/imagen14.jpg" alt="Carnaval 14" class="w-[280px] h-[200px] object-cover rounded-xl shadow-md border border-gray-100 shrink-0">
+                        <img src="IMAGENES/imagen15.jpg" alt="Carnaval 15" class="w-[280px] h-[200px] object-cover rounded-xl shadow-md border border-gray-100 shrink-0">
+                        <img src="IMAGENES/imagen16.jpg" alt="Carnaval 16" class="w-[280px] h-[200px] object-cover rounded-xl shadow-md border border-gray-100 shrink-0">
+                        <img src="IMAGENES/imagen17.jpg" alt="Carnaval 17" class="w-[280px] h-[200px] object-cover rounded-xl shadow-md border border-gray-100 shrink-0">
+                        <img src="IMAGENES/imagen18.jpg" alt="Carnaval 18" class="w-[280px] h-[200px] object-cover rounded-xl shadow-md border border-gray-100 shrink-0">
+                        <img src="IMAGENES/imagen19.jpg" alt="Carnaval 19" class="w-[280px] h-[200px] object-cover rounded-xl shadow-md border border-gray-100 shrink-0">
+                        <img src="IMAGENES/imagen20.jpg" alt="Carnaval 20" class="w-[280px] h-[200px] object-cover rounded-xl shadow-md border border-gray-100 shrink-0">
+                        <img src="IMAGENES/imagen21.jpg" alt="Carnaval 21" class="w-[280px] h-[200px] object-cover rounded-xl shadow-md border border-gray-100 shrink-0">
+                        <img src="IMAGENES/imagen22.jpg" alt="Carnaval 22" class="w-[280px] h-[200px] object-cover rounded-xl shadow-md border border-gray-100 shrink-0">
+                        <img src="IMAGENES/imagen23.jpg" alt="Carnaval 23" class="w-[280px] h-[200px] object-cover rounded-xl shadow-md border border-gray-100 shrink-0">
+                        <img src="IMAGENES/imagen24.jpg" alt="Carnaval 24" class="w-[280px] h-[200px] object-cover rounded-xl shadow-md border border-gray-100 shrink-0">
+                        <img src="IMAGENES/imagen25.jpg" alt="Carnaval 25" class="w-[280px] h-[200px] object-cover rounded-xl shadow-md border border-gray-100 shrink-0">
+                    </div>
+                </div>
+            </div>
+
+            <!-- BLOQUE DE CONTACTO REFORMADO: CORREO Y WHATSAPP JUNTOS -->
+            <div class="max-w-6xl mx-auto px-6 mt-24 border-t border-gray-100 pt-16" id="contacto">
+                <div class="mb-10" data-aos="fade-up">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-12 h-1.5 bg-[#0033ff]"></div>
+                        <span class="text-[#0033ff] font-bold uppercase tracking-wider text-sm">¿Tienes preguntas o contratos?</span>
+                    </div>
+                    <h2 class="text-3xl md:text-4xl font-extrabold mb-4 tracking-tight text-slate-900">Contáctanos</h2>
+                    <p class="text-gray-600 text-lg">Ponte en contacto directo con la administración por cualquiera de nuestros canales oficiales.</p>
+                </div>
+
+                <!-- Contenedor Flex / Grid para las dos tarjetas -->
+                <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                    
+                    <!-- Tarjeta de Correo Electrónico -->
+                    <div class="bg-white rounded-2xl shadow-xl p-8 border border-slate-100 text-center flex flex-col justify-between" data-aos="fade-right" data-aos-duration="1000">
+                        <div>
+                            <div class="w-20 h-20 bg-blue-50 text-[#0033ff] rounded-full flex items-center justify-center text-3xl mx-auto mb-6 shadow-inner">
+                                <i class="fa-regular fa-envelope-open animate-bounce"></i>
+                            </div>
+                            <p class="text-slate-500 font-medium text-sm uppercase tracking-wider mb-2">Nuestro Correo Electrónico</p>
+                            <h3 class="text-lg md:text-xl font-bold text-slate-800 mb-8 break-all select-all selection:bg-amber-200">bandaindependiente@gmail.com</h3>
+                        </div>
+                        
+                        <a href="mailto:bandaindependiente@gmail.com" target="_blank" class="inline-flex items-center justify-center gap-3 bg-gradient-to-r from-[#0033ff] to-[#001177] hover:from-blue-700 hover:to-blue-900 text-white font-bold px-8 py-4 rounded-xl shadow-lg transition-all transform hover:-translate-y-1 group mt-auto">
+                            <i class="fa-solid fa-paper-plane group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"></i>
+                            <span>REDACTAR CORREO</span>
+                        </a>
+                    </div>
+
+                    <!-- Nueva Tarjeta de WhatsApp -->
+                    <div class="bg-white rounded-2xl shadow-xl p-8 border border-slate-100 text-center flex flex-col justify-between" data-aos="fade-left" data-aos-duration="1000">
+                        <div>
+                            <div class="w-20 h-20 bg-emerald-50 text-emerald-500 rounded-full flex items-center justify-center text-4xl mx-auto mb-6 shadow-inner">
+                                <i class="fa-brands fa-whatsapp animate-bounce"></i>
+                            </div>
+                            <p class="text-slate-500 font-medium text-sm uppercase tracking-wider mb-2">Línea de WhatsApp</p>
+                            <h3 class="text-lg md:text-xl font-bold text-slate-800 mb-8 tracking-wide">+504 9929-4852</h3>
+                        </div>
+                        
+                        <a href="https://wa.me/50499294852" target="_blank" class="inline-flex items-center justify-center gap-3 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-bold px-8 py-4 rounded-xl shadow-lg transition-all transform hover:-translate-y-1 group mt-auto">
+                            <i class="fa-brands fa-whatsapp text-xl"></i>
+                            <span>ENVIAR MENSAJE</span>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN TRAYECTORIA / LOGROS -->
+        <section id="logros" class="py-24 bg-slate-50 relative border-t border-b border-gray-100">
+            <div class="max-w-6xl mx-auto px-6 text-center">
+                <div class="inline-block" data-aos="fade-up">
+                    <span class="text-[#0033ff] font-bold uppercase tracking-wider text-sm block mb-2">Grandes Éxitos</span>
+                    <h2 class="text-3xl md:text-5xl font-extrabold mb-16 tracking-tight text-slate-900 uppercase">Orgullo de Sabá a Nivel Nacional</h2>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="bg-white p-8 rounded-2xl shadow-md border-t-4 border-amber-400 transition-all hover:shadow-xl transform hover:-translate-y-2" data-aos="fade-up" data-aos-delay="100">
+                        <div class="w-16 h-16 bg-amber-100 text-amber-500 rounded-full flex items-center justify-center text-2xl mx-auto mb-6 shadow-inner">
+                            <i class="fa-solid fa-trophy"></i>
+                        </div>
+                        <h3 class="text-lg font-bold mb-3 tracking-wide uppercase text-slate-800">Campeones Cat. A RVA</h3>
+                        <p class="text-gray-600">Alcanzamos la gloria regional coronándonos campeones en un año de ensueño en Categoría A de la RVA.</p>
+                    </div>
+
+                    <div class="bg-white p-8 rounded-2xl shadow-md border-t-4 border-[#0033ff] transition-all hover:shadow-xl transform hover:-translate-y-2" data-aos="fade-up" data-aos-delay="200">
+                        <div class="w-16 h-16 bg-blue-100 text-[#0033ff] rounded-full flex items-center justify-center text-2xl mx-auto mb-6 shadow-inner">
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                        <h3 class="text-lg font-bold mb-3 tracking-wide uppercase text-slate-800">Nacionales</h3>
+                        <p class="text-gray-600">Nuestras competencias favoritas, dando la mejor impresión en cada rincón del país compitiendo en lo más alto con bandas de excelente nivel, quedando desde 2024 en el Top 3.</p>
+                    </div>
+
+                    <div class="bg-white p-8 rounded-2xl shadow-md border-t-4 border-red-500 transition-all hover:shadow-xl transform hover:-translate-y-2" data-aos="fade-up" data-aos-delay="300">
+                        <div class="w-16 h-16 bg-red-50 text-red-500 rounded-full flex items-center justify-center text-2xl mx-auto mb-6 shadow-inner">
+                            <i class="fa-solid fa-heart"></i>
+                        </div>
+                        <h3 class="text-lg font-bold mb-3 tracking-wide uppercase text-slate-800">Identidad</h3>
+                        <p class="text-gray-600">El verdadero logro es el lazo con nuestra gente; el cariño de Sabá y la pasión que compartimos en cada presentación.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- PIE DE PÁGINA (BARRA NEGRA DIFUMINADA TORNASOL) -->
+    <footer class="relative bg-slate-950/85 backdrop-blur-md text-white border-t border-white/10 shadow-[0_-10px_30px_rgba(0,0,0,0.5)] overflow-hidden mt-auto">
+        <!-- Efecto Tornasol/Reflejo Superior en el borde -->
+        <div class="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-blue-500 via-amber-400 via-purple-500 to-transparent opacity-60"></div>
+        
+        <div class="max-w-6xl mx-auto px-6 py-8 flex flex-col md:flex-row justify-between items-center gap-6 relative z-10">
+            <!-- Derechos Reservados -->
+            <div class="text-center md:text-left">
+                <p class="text-sm text-gray-300 font-medium tracking-wide">
+                    &copy; 2026 <span class="text-blue-400 font-semibold">Banda Independiente Sabá</span>. Todos los derechos reservados.
+                </p>
+                <p class="text-[11px] text-gray-500 mt-1 uppercase tracking-wider">Sabá, Colón, Honduras</p>
+            </div>
+
+            <!-- Iconos de Redes Sociales -->
+            <div class="flex items-center gap-5">
+                <!-- Facebook -->
+                <a href="https://www.facebook.com/p/Banda-Independiente-Sab%C3%A1-100086381265970" target="_blank" aria-label="Facebook" class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center transition-all duration-300 hover:bg-[#1877F2] hover:border-[#1877F2] hover:scale-110 group shadow-md">
+                    <i class="fa-brands fa-facebook-f text-gray-300 group-hover:text-white text-lg"></i>
+                </a>
+                <!-- TikTok -->
+                <a href="https://www.tiktok.com/@bandaindependientesaba1" target="_blank" aria-label="TikTok" class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center transition-all duration-300 hover:bg-black hover:border-zinc-800 hover:scale-110 group shadow-md relative overflow-hidden">
+                    <i class="fa-brands fa-tiktok text-gray-300 group-hover:text-white text-base relative z-10"></i>
+                    <!-- Brillo tornasol extra para tiktok -->
+                    <div class="absolute inset-0 bg-gradient-to-tr from-cyan-400/20 via-transparent to-red-400/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                </a>
+                <!-- YouTube -->
+                <a href="https://www.youtube.com/@BandaIndependienteSaba" target="_blank" aria-label="YouTube" class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center transition-all duration-300 hover:bg-[#FF0000] hover:border-[#FF0000] hover:scale-110 group shadow-md">
+                    <i class="fa-brands fa-youtube text-gray-300 group-hover:text-white text-base"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- SCRIPTS PARA INTERACTIVIDAD -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Inicialización de animaciones de scroll
+        AOS.init();
+
+        // Control del Menú Móvil hamburguesa
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Cerrar menú móvil al dar clic en cualquier enlace
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+    </script>
+</body>
+</html>
