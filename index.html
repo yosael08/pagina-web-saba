@@ -35,12 +35,18 @@
 <body class="bg-gray-50 text-slate-800 font-['Poppins'] overflow-x-hidden antialiased flex flex-col min-h-screen">
 
     <!-- BARRA DE NAVEGACIÓN -->
-    <nav class="bg-gradient-to-r from-[#001e99] via-[#0033ff] to-[#001177] text-white sticky top-0 z-50 shadow-xl px-6 py-3 flex justify-between items-center transition-all duration-300">
-        <div class="flex items-center space-x-3">
-            <img src="IMAGENES/logobisblanco.PNG" alt="Logo BIS" class="h-12 w-auto object-contain filter drop-shadow-md">
-            <span class="font-bold text-lg tracking-wide hidden sm:inline bg-gradient-to-r from-white to-gray-200 bg-clip-text text-transparent uppercase">banda independiente sabá</span>
-        </div>
+<!-- BARRA DE NAVEGACIÓN -->
+<nav class="bg-gradient-to-r from-[#001e99] via-[#0033ff] to-[#001177] text-white sticky top-0 z-50 shadow-xl px-4 py-3 flex justify-between items-center transition-all duration-300">
+    <!-- Este div mantiene el logo y el título juntos, pero ahora se expande para centrar el texto -->
+    <div class="flex items-center space-x-2 sm:space-x-3 flex-1 sm:flex-none justify-start">
+        <img src="IMAGENES/logobisblanco.PNG" alt="Logo BIS" class="h-10 sm:h-12 w-auto object-contain filter drop-shadow-md">
         
+        <!-- CORRECCIÓN DEL TÍTULO: Agregamos 'text-center flex-1 sm:text-left sm:flex-none' -->
+        <span class="font-bold text-sm sm:text-lg tracking-wide bg-gradient-to-r from-white to-gray-200 bg-clip-text text-transparent uppercase text-center flex-1 sm:text-left sm:flex-none pr-6 sm:pr-0">
+            banda independiente sabá
+        </span>
+    </div>
+    
         <div class="hidden md:flex items-center bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-6 py-1.5 shadow-[0_8px_32px_0_rgba(0,0,0,0.2)] gap-6 font-semibold">
             <a href="#inicio" class="hover:text-amber-400 transition-colors duration-300 text-sm">Inicio</a>
             <a href="#historia" class="hover:text-amber-400 transition-colors duration-300 text-sm">Historia</a>
