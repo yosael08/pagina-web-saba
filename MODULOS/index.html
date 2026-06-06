@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diseñador de Marcha - Banda Independiente Sabá</title>
+    
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        body { font-family: 'Poppins', sans-serif; }
+        
+        .grid-canvas {
+            display: grid;
+            grid-template-columns: repeat(30, minmax(14px, 1fr));
+            gap: 1px;
+            background-color: #cbd5e1;
+            position: relative;
+        }
+        .grid-cell {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 900;
+            cursor: pointer;
+            user-select: none;
+            transition: background-color 0.15s ease;
+            position: relative;
+            background-color: #ffffff;
+            z-index: 20;
+        }
+        .grid-cell:hover {
+            background-color: #f1f5f9;
+        }
+
+        /* CAPA DE FORMAS Y TEXTO AUTOMÁTICOS */
+        .shape-overlay-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            z-index: 30; 
+        }
+        .tactical-shape {
+            position: absolute;
+            box-sizing: border-box;
+            border-style: solid;
+            pointer-events: none;
+            z-index: 35;
+        }
+        .tactical-text {
+            position: absolute;
+            font-weight: 700;
+            font-size: 12px;
+            white-space: nowrap;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 40; 
+            font-family: 'Poppins', sans-serif;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 2px 6px;
+            border-radius: 4px;
+            border: 1px solid #cbd5e1;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* Modo mover habilitado para interacción de capas */
+        .movable-element {
+            pointer-events: auto !important;
+            cursor: move !important;
+        }
+    </style>
+</head>
+<body class="bg-slate-100 min-h-screen text-slate-800 antialiased">
+
+    <div id="login-screen" class="flex flex-col items-center justify-center min-h-screen px-4 bg-gradient-to-br from-slate-900 via-slate-800 to-[#001155]">
+        <div class="bg-white rounded-3xl p-8 max-w-md w-full shadow-[0_20px_50px_rgba(0,0,0,0.3)] border border-slate-100 text-center">
+            <div class="w-20 h-20 bg-blue-50 text-[#0033ff] rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-md">
+                <i class="fa-solid fa-shield-halved text-4xl"></i>
+            </div>
+            <h2 class="text-2xl font-black text-slate-900 uppercase tracking-tight">Acceso Privado</h2>
+            <p class="text-xs font-semibold text-[#0033ff] tracking-widest mt-1 uppercase">Módulo de Ingeniería Coreográfica</p>
+            <div class="mt-4 p-4 bg-amber-50 rounded-xl border border-amber-200 text-left">
+                <p class="text-xs text-amber-800 leading-relaxed font-medium">
+                    <i class="fa-solid fa-triangle-exclamation mr-1"></i> 
+                    Esta sección es únicamente para personas con acceso autorizado. Si quieres saber más acerca de esto, contáctate al correo: 
+                    <a href="mailto:bandaindependientesaba@gmail.com" class="font-bold underline text-blue-700">bandaindependientesaba@gmail.com</a>.
+                </p>
+            </div>
+            <form id="login-form" class="mt-6 space-y-4 text-left">
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Usuario</label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400"><i class="fa-solid fa-user text-sm"></i></span>
+                        <input type="text" id="username" required class="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-[#0033ff] transition-all" placeholder="Introduce tu usuario">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Contraseña</label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400"><i class="fa-solid fa-lock text-sm"></i></span>
+                        <input type="password" id="password" required class="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-[#0033ff] transition-all" placeholder="••••••••">
+                    </div>
+                </div>
+                <div id="login-error" class="hidden text-xs font-bold text-red-600 bg-red-50 p-3 rounded-lg border border-red-200 flex items-center gap-2">
+                    <i class="fa-solid fa-circle-xmark"></i>
+                    <span>No tienes cuenta o existe algún error, contáctate por correo.</span>
+                </div>
+                <button type="submit" class="w-full mt-2 bg-gradient-to-r from-[#0033ff] to-[#0011aa] hover:from-blue-600 hover:to-blue-800 text-white font-bold py-3 px-4 rounded-xl text-sm shadow-lg transition-all transform hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-arrow-right-to-bracket"></i> Iniciar Sesión
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div id="app-screen" class="hidden flex flex-col min-h-screen">
+        <header class="bg-gradient-to-r from-[#001e99] via-[#0033ff] to-[#001177] text-white px-4 py-4 shadow-xl flex flex-col lg:flex-row justify-between items-center gap-4">
+            <div class="flex items-center space-x-3">
+                <div class="w-2.5 h-2.5 bg-emerald-400 rounded-full animate-pulse"></div>
+                <h1 class="font-extrabold tracking-wide uppercase text-sm sm:text-base flex items-center gap-2">
+                    <i class="fa-solid fa-layer-group text-amber-400"></i> Diseñador de Figuras | elaborado por denis diaz
+                </h1>
+            </div>
+            
+            <div class="flex flex-wrap items-center bg-white/10 backdrop-blur-md px-3 py-1.5 rounded-2xl sm:rounded-full border border-white/20 text-xs font-bold gap-3 justify-center">
+                <div class="flex items-center gap-1.5">
+                    <button id="btn-prev-page" class="w-7 h-7 hover:bg-white/20 rounded-full flex items-center justify-center transition-all text-white">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+                    <div class="h-4 w-[1px] bg-white/30"></div>
+                    <span class="px-1">Pág: <span id="page-indicator" class="text-amber-400 font-black">1</span></span>
+                    <div class="h-4 w-[1px] bg-white/30"></div>
+                    <input type="text" id="page-title-input" class="bg-transparent uppercase text-amber-400 font-bold max-w-[120px] text-center focus:outline-none border-b border-dashed border-white/40 focus:border-amber-400" value="FIGURA INICIAL">
+                    <button id="btn-next-page" class="w-7 h-7 hover:bg-white/20 rounded-full flex items-center justify-center transition-all text-white">
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+                
+                <div class="hidden sm:block h-5 w-[1px] bg-white/30"></div>
+                
+                <div class="flex items-center gap-2 bg-black/20 px-3 py-1 rounded-full border border-white/10">
+                    <span class="text-[11px] text-slate-200">¿Título en PDF?</span>
+                    <select id="pdf-header-toggle" class="bg-slate-800 text-white text-[11px] font-bold rounded px-1.5 py-0.5 border border-white/20 focus:outline-none">
+                        <option value="si">SÍ</option>
+                        <option value="no">NO</option>
+                    </select>
+                </div>
+            </div>
+
+            <button id="logout-btn" class="text-xs bg-red-600/20 hover:bg-red-600 border border-red-500/30 text-red-200 hover:text-white px-3 py-1.5 rounded-lg transition-all font-semibold flex items-center gap-1">
+                <i class="fa-solid fa-power-off"></i> Salir
+            </button>
+        </header>
+
+        <div class="flex-grow flex flex-col lg:flex-row p-4 sm:p-6 gap-6">
+            <aside class="w-full lg:w-80 bg-white rounded-2xl shadow-xl p-5 border border-slate-200 flex flex-col justify-between gap-6 shrink-0">
+                <div class="space-y-4 max-h-[82vh] overflow-y-auto pr-1">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">1. Seleccionar Escuadra</label>
+                        <select id="escuadra-select" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 focus:outline-none focus:border-[#0033ff] transition-all">
+                            <option value="R">R - Redoblante</option>
+                            <option value="G">G - Güiro</option>
+                            <option value="L">L - Lira</option>
+                            <option value="C">C - Cuero</option>
+                            <option value="T">T - Tarola</option>
+                            <option value="B">B - Bombo</option>
+                            <option value="P">P - Platillo</option>
+                        </select>
+                    </div>
+
+                    <div class="p-3 bg-slate-50 rounded-xl border border-slate-100 space-y-1.5">
+                        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wide block mb-1">Color Activo</span>
+                        <div id="color-preview" class="flex items-center gap-3 text-xs font-bold p-1 rounded-md">
+                            <div id="preview-box" class="w-6 h-6 rounded-md flex items-center justify-center text-white font-black shadow-sm">R</div>
+                            <span id="preview-name" class="text-slate-700">Redoblantes</span>
+                        </div>
+                    </div>
+
+                    <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-3">
+                        <span class="text-xs font-bold text-slate-500 uppercase tracking-wider flex items-center gap-1.5">
+                            <i class="fa-solid fa-screwdriver-wrenches text-blue-600"></i> Herramientas de Diseño
+                        </span>
+                        
+                        <button id="btn-toggle-shapes" class="w-full bg-white hover:bg-blue-50 border border-blue-200 text-blue-600 font-bold py-2.5 px-3 rounded-xl text-xs flex items-center justify-center gap-2 transition-all shadow-sm">
+                            <i class="fa-regular fa-square text-sm"></i> Insertar Rectángulo
+                        </button>
+
+                        <div id="shapes-config-panel" class="hidden space-y-2.5 pt-1 border-t border-slate-200">
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Estilo Relleno</label>
+                                <div class="grid grid-cols-2 gap-1.5">
+                                    <button id="shape-fill-on" class="py-1 px-2 rounded-lg text-[11px] font-bold border border-blue-600 bg-blue-600 text-white transition-all">Con Relleno</button>
+                                    <button id="shape-fill-off" class="py-1 px-2 rounded-lg text-[11px] font-bold border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 transition-all">Sin Relleno</button>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Paleta Pastel</label>
+                                <div class="grid grid-cols-4 gap-1.5">
+                                    <button class="shape-color-btn w-full h-7 rounded-lg border-2 border-amber-400 bg-amber-100/60" data-color="orange" title="Naranja"></button>
+                                    <button class="shape-color-btn w-full h-7 rounded-lg border border-slate-200 bg-blue-100/60" data-color="blue" title="Azul"></button>
+                                    <button class="shape-color-btn w-full h-7 rounded-lg border border-slate-200 bg-yellow-100/60" data-color="yellow" title="Amarillo"></button>
+                                    <button class="shape-color-btn w-full h-7 rounded-lg border border-slate-200 bg-purple-100/60" data-color="purple" title="Morado"></button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button id="btn-toggle-text" class="w-full bg-white hover:bg-emerald-50 border border-emerald-200 text-emerald-600 font-bold py-2.5 px-3 rounded-xl text-xs flex items-center justify-center gap-2 transition-all shadow-sm">
+                            <i class="fa-solid fa-font text-sm"></i> Insertar Texto Etiqueta
+                        </button>
+                        
+                        <div id="text-config-panel" class="hidden space-y-2 pt-1 border-t border-slate-200">
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase">Texto a colocar</label>
+                            <input type="text" id="custom-tactical-text" class="w-full p-2 bg-white border border-slate-200 rounded-lg text-xs font-semibold text-slate-700 focus:outline-none focus:border-emerald-500" placeholder="Ej: Fila A">
+                        </div>
+
+                        <button id="btn-toggle-move" class="w-full bg-white hover:bg-indigo-50 border border-indigo-200 text-indigo-600 font-bold py-2.5 px-3 rounded-xl text-xs flex items-center justify-center gap-2 transition-all shadow-sm">
+                            <i class="fa-solid fa-arrows-up-down-left-right text-sm"></i> Mover Elementos
+                        </button>
+                    </div>
+
+                    <div class="p-3 bg-slate-900 text-white rounded-xl space-y-2 border border-slate-800 shadow-inner">
+                        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block border-b border-slate-700 pb-1">
+                            <i class="fa-solid fa-folder-open text-amber-400 mr-1"></i> Archivos Guardados en Sistema
+                        </span>
+                        <div id="saved-files-list" class="space-y-1.5 max-h-36 overflow-y-auto pr-1 text-[11px]">
+                            <p class="text-slate-400 text-center py-2 italic text-[10px]">No hay archivos creados aún.</p>
+                        </div>
+                    </div>
+
+                    <div class="h-[1px] bg-slate-100 my-1"></div>
+
+                    <div class="space-y-2">
+                        <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-0.5">2. Acciones del Sistema</label>
+                        <button id="btn-clean-individual" class="w-full bg-slate-100 hover:bg-amber-100 border border-slate-200 text-slate-700 hover:text-amber-800 font-bold py-2.5 px-4 rounded-xl text-xs flex items-center justify-center gap-2 transition-all">
+                            <i class="fa-solid fa-eraser text-sm"></i> Limpiar Individual (Desactivado)
+                        </button>
+
+                        <button id="btn-clean-all" class="w-full bg-red-50 hover:bg-red-100 border border-red-200 text-red-600 font-bold py-2 px-4 rounded-xl text-xs flex items-center justify-center gap-2 transition-all">
+                            <i class="fa-solid fa-trash-can"></i> Limpiar Cuadrícula Entera
+                        </button>
+
+                        <div class="grid grid-cols-2 gap-2 pt-1">
+                            <button id="btn-save-page" class="bg-emerald-600 hover:bg-emerald-700 text-white font-black py-3 px-3 rounded-xl text-xs flex items-center justify-center gap-1 transition-all shadow-md">
+                                <i class="fa-solid fa-floppy-disk text-sm"></i> GUARDAR TODO
+                            </button>
+                            <button id="btn-new-page" class="bg-[#0033ff] hover:bg-blue-700 text-white font-bold py-3 px-3 rounded-xl text-xs flex items-center justify-center gap-1 shadow-md transition-all">
+                                <i class="fa-solid fa-file-circle-plus"></i> Nueva Pag
+                            </button>
+                        </div>
+
+                        <button id="btn-delete-page" class="w-full bg-rose-50 hover:bg-rose-600 border border-rose-200 hover:border-rose-600 text-rose-700 hover:text-white font-bold py-2 px-4 rounded-xl text-xs flex items-center justify-center gap-2 transition-all">
+                            <i class="fa-solid fa-rectangle-xmark"></i> Cerrar Página Actual
+                        </button>
+                    </div>
+                </div>
+
+                <div class="pt-4 border-t border-slate-100">
+                    <button id="btn-export-pdf" class="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 font-black py-4 px-4 rounded-xl text-xs shadow-lg flex items-center justify-center gap-2 tracking-wider transition-all transform hover:-translate-y-0.5">
+                        <i class="fa-solid fa-file-pdf text-sm"></i> EXPORTAR REPORTE OFICIAL (PDF)
+                    </button>
+                </div>
+            </aside>
+
+            <main class="flex-grow bg-white rounded-2xl shadow-xl p-4 border border-slate-200 overflow-auto flex items-start justify-center">
+                <div class="min-w-[500px] w-full max-w-4xl">
+                    <div class="mb-3 flex justify-between items-center px-1">
+                        <span class="text-xs font-bold text-slate-400 uppercase">Espacio de Formación Táctica (30x24)</span>
+                        <span id="canvas-status" class="text-[11px] bg-blue-50 text-[#0033ff] px-2 py-0.5 rounded-md font-bold">Modo: Colocar Fichas</span>
+                    </div>
+                    
+                    <div id="grid-container" class="grid-canvas p-1 rounded-xl shadow-inner border border-slate-300">
+                        </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <script>
+        const ESCUADRAS_CONFIG = {
+            'R': { nombre: 'REDOBLANTES', color: '#00ffff', texto: '#000000' },
+            'G': { nombre: 'GÜIROS', color: '#ff0000', texto: '#ffffff' },
+            'L': { nombre: 'LIRAS', color: '#800080', texto: '#ffffff' },
+            'C': { nombre: 'CUEROS', color: '#ffa500', texto: '#000000' },
+            'T': { nombre: 'TAROLAS', color: '#008000', texto: '#ffffff' },
+            'B': { nombre: 'BOMBOS', color: '#000000', texto: '#ffffff' },
+            'P': { nombre: 'PLATILLOS', color: '#ffc0cb', texto: '#000000' }
+        };
+
+        const SHAPE_COLORS_CONFIG = {
+            'orange': { border: 'rgba(217, 119, 6, 1)', fill: 'rgba(254, 243, 199, 0.6)' },
+            'blue': { border: 'rgba(37, 99, 235, 1)', fill: 'rgba(219, 234, 254, 0.6)' },
+            'yellow': { border: 'rgba(202, 138, 4, 1)', fill: 'rgba(254, 249, 195, 0.6)' },
+            'purple': { border: 'rgba(147, 51, 234, 1)', fill: 'rgba(243, 232, 255, 0.6)' }
+        };
+
+        let totalPagesData = [{ id: 1, title: 'FIGURA INICIAL', showHeaderInPdf: 'si', cells: {}, shapes: [], texts: [] }];
+        let currentPageIndex = 0;
+        
+        let isIndividualCleanMode = false;
+        let isShapeModeActive = false;
+        let isTextModeActive = false;
+        let isMoveModeActive = false; 
+
+        let shapeConfig = { hasFill: true, colorKey: 'orange' };
+        let firstCellSelected = null; 
+        let draggedElement = null;
+
+        const ROWS = 24;
+        const COLS = 30;
+
+        const loginScreen = document.getElementById('login-screen');
+        const appScreen = document.getElementById('app-screen');
+        const loginForm = document.getElementById('login-form');
+        const loginError = document.getElementById('login-error');
+        const escuadraSelect = document.getElementById('escuadra-select');
+        const previewBox = document.getElementById('preview-box');
+        const previewName = document.getElementById('preview-name');
+        const canvasStatus = document.getElementById('canvas-status');
+        const pageIndicator = document.getElementById('page-indicator');
+        const pageTitleInput = document.getElementById('page-title-input');
+        const pdfHeaderToggle = document.getElementById('pdf-header-toggle');
+        const gridContainer = document.getElementById('grid-container');
+        const savedFilesList = document.getElementById('saved-files-list');
+        
+        let shapeOverlayLayer = null;
+
+        const btnCleanIndividual = document.getElementById('btn-clean-individual');
+        const btnCleanAll = document.getElementById('btn-clean-all');
+        const btnSavePage = document.getElementById('btn-save-page');
+        const btnNewPage = document.getElementById('btn-new-page');
+        const btnDeletePage = document.getElementById('btn-delete-page');
+        const btnExportPdf = document.getElementById('btn-export-pdf');
+        const logoutBtn = document.getElementById('logout-btn');
+        const btnPrevPage = document.getElementById('btn-prev-page');
+        const btnNextPage = document.getElementById('btn-next-page');
+
+        const btnToggleShapes = document.getElementById('btn-toggle-shapes');
+        const shapesConfigPanel = document.getElementById('shapes-config-panel');
+        const shapeFillOn = document.getElementById('shape-fill-on');
+        const shapeFillOff = document.getElementById('shape-fill-off');
+        const shapeColorBtns = document.querySelectorAll('.shape-color-btn');
+
+        const btnToggleText = document.getElementById('btn-toggle-text');
+        const textConfigPanel = document.getElementById('text-config-panel');
+        const customTacticalText = document.getElementById('custom-tactical-text');
+        const btnToggleMove = document.getElementById('btn-toggle-move');
+
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const user = document.getElementById('username').value.trim();
+            const pass = document.getElementById('password').value;
+
+            if ((user === "admin" && pass === "saba2026") || (user === "banda" && pass === "bis2026")) {
+                loginScreen.classList.add('hidden');
+                appScreen.classList.remove('hidden');
+                initSystem();
+            } else {
+                loginError.classList.remove('hidden');
+            }
+        });
+
+        logoutBtn.addEventListener('click', () => {
+            appScreen.classList.add('hidden');
+            loginScreen.classList.remove('hidden');
+            loginForm.reset();
+            loginError.classList.add('hidden');
+        });
+
+        function initSystem() {
+            updatePalettePreview();
+            renderGridCanvas();
+            updatePageMetaVisuals();
+            renderSavedFilesHistory();
+        }
+
+        escuadraSelect.addEventListener('change', () => {
+            resetAllModesExcept('');
+            updatePalettePreview();
+        });
+
+        function updatePalettePreview() {
+            const val = escuadraSelect.value;
+            const conf = ESCUADRAS_CONFIG[val];
+            previewBox.textContent = val;
+            previewBox.style.backgroundColor = conf.color;
+            previewBox.style.color = conf.texto;
+            previewName.textContent = conf.nombre;
+        }
+
+        function resetAllModesExcept(activeMode) {
+            if (activeMode !== 'clean') toggleIndividualCleanMode(false);
+            if (activeMode !== 'shape') toggleShapeMode(false);
+            if (activeMode !== 'text') toggleTextMode(false);
+            if (activeMode !== 'move') toggleMoveMode(false);
+        }
+
+        btnCleanIndividual.addEventListener('click', () => {
+            resetAllModesExcept(isIndividualCleanMode ? '' : 'clean');
+            toggleIndividualCleanMode(!isIndividualCleanMode);
+        });
+
+        function toggleIndividualCleanMode(activate) {
+            isIndividualCleanMode = activate;
+            if (isIndividualCleanMode) {
+                canvasStatus.textContent = "Modo: Borrar Elementos o Fichas";
+                canvasStatus.className = "text-[11px] bg-amber-100 text-amber-800 px-2 py-0.5 rounded-md font-bold";
+                btnCleanIndividual.innerHTML = `<i class="fa-solid fa-circle-dot text-sm animate-ping"></i> Cancelar Limpieza`;
+                btnCleanIndividual.className = "w-full bg-amber-500 text-slate-950 font-black py-3 px-4 rounded-xl text-xs flex items-center justify-center gap-2 transition-all";
+            } else {
+                canvasStatus.textContent = "Modo: Colocar Fichas";
+                canvasStatus.className = "text-[11px] bg-blue-50 text-[#0033ff] px-2 py-0.5 rounded-md font-bold";
+                btnCleanIndividual.innerHTML = `<i class="fa-solid fa-eraser text-sm"></i> Limpiar Individual (Desactivado)`;
+                btnCleanIndividual.className = "w-full bg-slate-100 hover:bg-amber-100 border border-slate-200 text-slate-700 hover:text-amber-800 font-bold py-3 px-4 rounded-xl text-xs flex items-center justify-center gap-2 transition-all";
+            }
+            renderShapesAndTextsOnCanvas();
+        }
+
+        btnToggleShapes.addEventListener('click', () => {
+            resetAllModesExcept(isShapeModeActive ? '' : 'shape');
+            toggleShapeMode(!isShapeModeActive);
+        });
+
+        function toggleShapeMode(activate) {
+            isShapeModeActive = activate;
+            firstCellSelected = null;
+            if (isShapeModeActive) {
+                canvasStatus.textContent = "Modo: Dibujar Forma (Click celda inicio)";
+                canvasStatus.className = "text-[11px] bg-purple-100 text-purple-800 px-2 py-0.5 rounded-md font-bold";
+                btnToggleShapes.className = "w-full bg-purple-600 text-white font-black py-2.5 px-3 rounded-xl text-xs flex items-center justify-center gap-2 transition-all shadow-md";
+                shapesConfigPanel.classList.remove('hidden');
+            } else {
+                canvasStatus.textContent = "Modo: Colocar Fichas";
+                canvasStatus.className = "text-[11px] bg-blue-50 text-[#0033ff] px-2 py-0.5 rounded-md font-bold";
+                btnToggleShapes.className = "w-full bg-white hover:bg-blue-50 border border-blue-200 text-blue-600 font-bold py-2.5 px-3 rounded-xl text-xs flex items-center justify-center gap-2 transition-all shadow-sm";
+                shapesConfigPanel.classList.add('hidden');
+            }
+        }
+
+        shapeFillOn.addEventListener('click', () => {
+            shapeConfig.hasFill = true;
+            shapeFillOn.className = "py-1 px-2 rounded-lg text-[11px] font-bold border border-blue-600 bg-blue-600 text-white transition-all";
+            shapeFillOff.className = "py-1 px-2 rounded-lg text-[11px] font-bold border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 transition-all";
+        });
+
+        shapeFillOff.addEventListener('click', () => {
+            shapeConfig.hasFill = false;
+            shapeFillOff.className = "py-1 px-2 rounded-lg text-[11px] font-bold border border-blue-600 bg-blue-600 text-white transition-all";
+            shapeFillOn.className = "py-1 px-2 rounded-lg text-[11px] font-bold border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 transition-all";
+        });
+
+        shapeColorBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                shapeColorBtns.forEach(b => b.classList.replace('border-amber-400', 'border-slate-200'));
+                btn.classList.replace('border-slate-200', 'border-amber-400');
+                shapeConfig.colorKey = btn.dataset.color;
+            });
+        });
+
+        btnToggleText.addEventListener('click', () => {
+            resetAllModesExcept(isTextModeActive ? '' : 'text');
+            toggleTextMode(!isTextModeActive);
+        });
+
+        function toggleTextMode(activate) {
+            isTextModeActive = activate;
+            if (isTextModeActive) {
+                canvasStatus.textContent = "Modo: Insertar Texto (Click en celda destino)";
+                canvasStatus.className = "text-[11px] bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-md font-bold";
+                btnToggleText.className = "w-full bg-emerald-600 text-white font-black py-2.5 px-3 rounded-xl text-xs flex items-center justify-center gap-2 transition-all shadow-md";
+                textConfigPanel.classList.remove('hidden');
+                customTacticalText.focus();
+            } else {
+                canvasStatus.textContent = "Modo: Colocar Fichas";
+                canvasStatus.className = "text-[11px] bg-blue-50 text-[#0033ff] px-2 py-0.5 rounded-md font-bold";
+                btnToggleText.className = "w-full bg-white hover:bg-emerald-50 border border-emerald-200 text-emerald-600 font-bold py-2.5 px-3 rounded-xl text-xs flex items-center justify-center gap-2 transition-all shadow-sm";
+                textConfigPanel.classList.add('hidden');
+            }
+        }
+
+        btnToggleMove.addEventListener('click', () => {
+            resetAllModesExcept(isMoveModeActive ? '' : 'move');
+            toggleMoveMode(!isMoveModeActive);
+        });
+
+        function toggleMoveMode(activate) {
+            isMoveModeActive = activate;
+            if (isMoveModeActive) {
+                canvasStatus.textContent = "Modo: Mover (Arrastra rectángulos o textos)";
+                canvasStatus.className = "text-[11px] bg-indigo-100 text-indigo-800 px-2 py-0.5 rounded-md font-bold";
+                btnToggleMove.className = "w-full bg-indigo-600 text-white font-black py-2.5 px-3 rounded-xl text-xs flex items-center justify-center gap-2 transition-all shadow-md";
+            } else {
+                canvasStatus.textContent = "Modo: Colocar Fichas";
+                canvasStatus.className = "text-[11px] bg-blue-50 text-[#0033ff] px-2 py-0.5 rounded-md font-bold";
+                btnToggleMove.className = "w-full bg-white hover:bg-indigo-50 border border-indigo-200 text-indigo-600 font-bold py-2.5 px-3 rounded-xl text-xs flex items-center justify-center gap-2 transition-all shadow-sm";
+            }
+            renderShapesAndTextsOnCanvas();
+        }
+
+        function renderShapesAndTextsOnCanvas() {
+            if (!shapeOverlayLayer) return;
+            shapeOverlayLayer.innerHTML = '';
+            const activePage = totalPagesData[currentPageIndex];
+            
+            if (!activePage.shapes) activePage.shapes = [];
+            if (!activePage.texts) activePage.texts = [];
+
+            activePage.shapes.forEach((shape, index) => {
+                const shapeDiv = document.createElement('div');
+                shapeDiv.classList.add('tactical-shape');
+                
+                const minC = Math.min(shape.start.c, shape.end.c);
+                const minR = Math.min(shape.start.r, shape.end.r);
+                const widthCols = Math.abs(shape.end.c - shape.start.c) + 1;
+                const heightRows = Math.abs(shape.end.r - shape.start.r) + 1;
+
+                shapeDiv.style.left = `${(minC / COLS) * 100}%`;
+                shapeDiv.style.top = `${(minR / ROWS) * 100}%`;
+                shapeDiv.style.width = `${(widthCols / COLS) * 100}%`;
+                shapeDiv.style.height = `${(heightRows / ROWS) * 100}%`;
+
+                const colors = SHAPE_COLORS_CONFIG[shape.colorKey];
+                shapeDiv.style.borderWidth = '3px';
+                shapeDiv.style.borderColor = colors.border;
+                shapeDiv.style.backgroundColor = shape.hasFill ? colors.fill : 'transparent';
+
+                if (isIndividualCleanMode) {
+                    shapeDiv.classList.add('movable-element');
+                    shapeDiv.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        activePage.shapes.splice(index, 1);
+                        renderShapesAndTextsOnCanvas();
+                    });
+                } else if (isMoveModeActive) {
+                    shapeDiv.classList.add('movable-element');
+                    shapeDiv.addEventListener('mousedown', (e) => {
+                        e.stopPropagation();
+                        draggedElement = { type: 'shape', index: index, widthCols, heightRows };
+                    });
+                }
+
+                shapeOverlayLayer.appendChild(shapeDiv);
+            });
+
+            activePage.texts.forEach((txt, index) => {
+                const textDiv = document.createElement('div');
+                textDiv.classList.add('tactical-text');
+                textDiv.textContent = txt.content;
+                
+                textDiv.style.left = `${((txt.c + 0.5) / COLS) * 100}%`;
+                textDiv.style.top = `${((txt.r + 0.5) / ROWS) * 100}%`;
+
+                if (isIndividualCleanMode) {
+                    textDiv.classList.add('movable-element');
+                    textDiv.style.borderColor = '#ef4444';
+                    textDiv.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        activePage.texts.splice(index, 1);
+                        renderShapesAndTextsOnCanvas();
+                    });
+                } else if (isMoveModeActive) {
+                    textDiv.classList.add('movable-element');
+                    textDiv.style.borderColor = '#4f46e5';
+                    textDiv.addEventListener('mousedown', (e) => {
+                        e.stopPropagation();
+                        draggedElement = { type: 'text', index: index };
+                    });
+                }
+
+                shapeOverlayLayer.appendChild(textDiv);
+            });
+        }
+
+        gridContainer.addEventListener('mouseup', (e) => {
+            if (!isMoveModeActive || !draggedElement) return;
+
+            const rect = gridContainer.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            const targetCol = Math.floor((x / rect.width) * COLS);
+            const targetRow = Math.floor((y / rect.height) * ROWS);
+
+            if (targetCol >= 0 && targetCol < COLS && targetRow >= 0 && targetRow < ROWS) {
+                const activePage = totalPagesData[currentPageIndex];
+                
+                if (draggedElement.type === 'text') {
+                    activePage.texts[draggedElement.index].c = targetCol;
+                    activePage.texts[draggedElement.index].r = targetRow;
+                } else if (draggedElement.type === 'shape') {
+                    const shape = activePage.shapes[draggedElement.index];
+                    const w = draggedElement.widthCols - 1;
+                    const h = draggedElement.heightRows - 1;
+                    
+                    shape.start.c = targetCol;
+                    shape.start.r = targetRow;
+                    shape.end.c = Math.min(COLS - 1, targetCol + w);
+                    shape.end.r = Math.min(ROWS - 1, targetRow + h);
+                }
+                renderShapesAndTextsOnCanvas();
+            }
+            draggedElement = null;
+        });
+
+        function renderGridCanvas() {
+            gridContainer.innerHTML = '';
+            const activePage = totalPagesData[currentPageIndex];
+            const activePageCells = activePage.cells;
+
+            for (let r = 0; r < ROWS; r++) {
+                for (let c = 0; c < COLS; c++) {
+                    const cellKey = `${r}-${c}`;
+                    const cellElement = document.createElement('div');
+                    cellElement.classList.add('grid-cell');
+                    cellElement.style.border = '1px solid rgba(203, 213, 225, 0.4)';
+
+                    if (activePageCells[cellKey]) {
+                        const token = activePageCells[cellKey];
+                        const conf = ESCUADRAS_CONFIG[token];
+                        
+                        cellElement.style.backgroundColor = conf.color;
+                        cellElement.style.color = conf.texto;
+                        cellElement.textContent = token;
+                        cellElement.style.zIndex = "50"; 
+                    } else {
+                        cellElement.style.backgroundColor = '#ffffff';
+                        cellElement.style.color = 'inherit';
+                        cellElement.textContent = '';
+                        cellElement.style.zIndex = "20";
+                    }
+
+                    cellElement.addEventListener('click', () => {
+                        if (isMoveModeActive) return;
+
+                        if (isIndividualCleanMode) {
+                            if (activePageCells[cellKey]) {
+                                delete activePageCells[cellKey];
+                            }
+                            renderGridCanvas();
+                            return;
+                        }
+
+                        if (isShapeModeActive) {
+                            if (!firstCellSelected) {
+                                firstCellSelected = { r, c };
+                                canvasStatus.textContent = "Modo: Dibujar Forma (Click celda final)";
+                                canvasStatus.className = "text-[11px] bg-purple-500 text-white px-2 py-0.5 rounded-md font-bold animate-pulse";
+                            } else {
+                                activePage.shapes.push({
+                                    start: { r: firstCellSelected.r, c: firstCellSelected.c },
+                                    end: { r: r, c: c },
+                                    hasFill: shapeConfig.hasFill,
+                                    colorKey: shapeConfig.colorKey
+                                });
+                                toggleShapeMode(false);
+                                renderShapesAndTextsOnCanvas();
+                            }
+                            return;
+                        }
+
+                        if (isTextModeActive) {
+                            const rawText = customTacticalText.value.trim();
+                            if (rawText !== "") {
+                                activePage.texts.push({ r, c, content: rawText });
+                                customTacticalText.value = '';
+                                toggleTextMode(false);
+                                renderShapesAndTextsOnCanvas();
+                            }
+                            return;
+                        }
+
+                        const activeEscuadra = escuadraSelect.value;
+                        if (activePageCells[cellKey] === activeEscuadra) {
+                            delete activePageCells[cellKey]; 
+                        } else {
+                            activePageCells[cellKey] = activeEscuadra;
+                        }
+                        renderGridCanvas();
+                    });
+
+                    gridContainer.appendChild(cellElement);
+                }
+            }
+
+            shapeOverlayLayer = document.createElement('div');
+            shapeOverlayLayer.id = 'shape-overlay-layer';
+            shapeOverlayLayer.className = 'shape-overlay-container';
+            gridContainer.appendChild(shapeOverlayLayer);
+
+            renderShapesAndTextsOnCanvas();
+        }
+
+        pageTitleInput.addEventListener('input', () => {
+            totalPagesData[currentPageIndex].title = pageTitleInput.value.toUpperCase();
+        });
+
+        pdfHeaderToggle.addEventListener('change', () => {
+            totalPagesData[currentPageIndex].showHeaderInPdf = pdfHeaderToggle.value;
+        });
+
+        function updatePageMetaVisuals() {
+            pageIndicator.textContent = currentPageIndex + 1;
+            pageTitleInput.value = totalPagesData[currentPageIndex].title;
+            pdfHeaderToggle.value = totalPagesData[currentPageIndex].showHeaderInPdf || 'si';
+        }
+
+        btnCleanAll.addEventListener('click', () => {
+            if (confirm("¿Estás seguro de que deseas limpiar por completo esta página?")) {
+                totalPagesData[currentPageIndex].cells = {};
+                totalPagesData[currentPageIndex].shapes = [];
+                totalPagesData[currentPageIndex].texts = [];
+                renderGridCanvas();
+            }
+        });
+
+        btnNewPage.addEventListener('click', () => {
+            const nextId = totalPagesData.length + 1;
+            totalPagesData.push({ id: nextId, title: `NUEVA FIGURA ${nextId}`, showHeaderInPdf: 'si', cells: {}, shapes: [], texts: [] });
+            currentPageIndex = totalPagesData.length - 1;
+            updatePageMetaVisuals();
+            renderGridCanvas();
+        });
+
+        btnDeletePage.addEventListener('click', () => {
+            if (totalPagesData.length <= 1) {
+                alert("No puedes eliminar la única página.");
+                return;
+            }
+            if (confirm("¿Seguro que deseas eliminar la página actual?")) {
+                totalPagesData.splice(currentPageIndex, 1);
+                currentPageIndex = Math.max(0, currentPageIndex - 1);
+                updatePageMetaVisuals();
+                renderGridCanvas();
+            }
+        });
+
+        btnPrevPage.addEventListener('click', () => {
+            if (currentPageIndex > 0) {
+                currentPageIndex--;
+                updatePageMetaVisuals();
+                renderGridCanvas();
+            }
+        });
+
+        btnNextPage.addEventListener('click', () => {
+            if (currentPageIndex < totalPagesData.length - 1) {
+                currentPageIndex++;
+                updatePageMetaVisuals();
+                renderGridCanvas();
+            }
+        });
+
+        // ==========================================================================
+        // NUEVA LOGÍSICA DE GUARDADO COMPLETO EN SISTEMA (ESTILO WORD)
+        // ==========================================================================
+        btnSavePage.addEventListener('click', () => {
+            if (confirm("¿Estás seguro de que deseas guardar todas las páginas de este diseño actual?")) {
+                const fileName = prompt("Asigna un nombre a este archivo para guardarlo en tu historial:");
+                if (fileName === null) return; // Si cancela el prompt
+                
+                const trimmedName = fileName.trim();
+                if (trimmedName === "") {
+                    alert("Debes escribir un nombre válido para guardar el archivo.");
+                    return;
+                }
+
+                // Estructura del archivo
+                const newFileRecord = {
+                    name: trimmedName.toUpperCase(),
+                    date: new Date().toLocaleString(),
+                    data: totalPagesData
+                };
+
+                // Traer archivos previos o iniciar array vacío
+                let currentSavedFiles = JSON.parse(localStorage.getItem('bis_marcha_files')) || [];
+                
+                // Si ya existe uno con el mismo nombre, se reemplaza o añade uno nuevo
+                currentSavedFiles.push(newFileRecord);
+                localStorage.setItem('bis_marcha_files', JSON.stringify(currentSavedFiles));
+                
+                alert(`¡Archivo "${trimmedName}" guardado con éxito! Podrás cargarlo en cualquier momento desde tu historial.`);
+                renderSavedFilesHistory();
+            }
+        });
+
+        function renderSavedFilesHistory() {
+            savedFilesList.innerHTML = '';
+            let currentSavedFiles = JSON.parse(localStorage.getItem('bis_marcha_files')) || [];
+
+            if (currentSavedFiles.length === 0) {
+                savedFilesList.innerHTML = `<p class="text-slate-400 text-center py-2 italic text-[10px]">No hay archivos creados aún.</p>`;
+                return;
+            }
+
+            currentSavedFiles.forEach((file, index) => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = "flex justify-between items-center bg-slate-800 p-2 rounded-lg border border-slate-700 gap-1 hover:border-blue-500 transition-all";
+                
+                itemDiv.innerHTML = `
+                    <div class="truncate flex-grow pr-1">
+                        <div class="font-bold text-blue-400 truncate uppercase">${file.name}</div>
+                        <div class="text-[9px] text-slate-400">${file.date}</div>
+                    </div>
+                    <div class="flex gap-1 shrink-0">
+                        <button onclick="loadTacticalFile(${index})" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded text-[10px] transition-all cursor-pointer" title="Abrir Archivo">
+                            Abrir
+                        </button>
+                        <button onclick="deleteTacticalFile(${index})" class="bg-red-600/30 hover:bg-red-600 text-red-200 hover:text-white font-bold py-1 px-1.5 rounded text-[10px] transition-all cursor-pointer" title="Eliminar">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                    </div>
+                `;
+                savedFilesList.appendChild(itemDiv);
+            });
+        }
+
+        // Función global expuesta para cargar los datos del archivo seleccionado
+        window.loadTacticalFile = function(index) {
+            let currentSavedFiles = JSON.parse(localStorage.getItem('bis_marcha_files')) || [];
+            if (currentSavedFiles[index]) {
+                if (confirm(`¿Deseas abrir el archivo "${currentSavedFiles[index].name}"? Se perderán las modificaciones no guardadas en la cuadrícula actual.`)) {
+                    totalPagesData = JSON.parse(JSON.stringify(currentSavedFiles[index].data));
+                    currentPageIndex = 0;
+                    updatePageMetaVisuals();
+                    renderGridCanvas();
+                    alert(`Archivo "${currentSavedFiles[index].name}" cargado de forma exitosa.`);
+                }
+            }
+        };
+
+        // Función global expuesta para eliminar un archivo del historial
+        window.deleteTacticalFile = function(index) {
+            let currentSavedFiles = JSON.parse(localStorage.getItem('bis_marcha_files')) || [];
+            if (currentSavedFiles[index]) {
+                if (confirm(`¿Estás seguro de que deseas eliminar permanentemente el archivo "${currentSavedFiles[index].name}"?`)) {
+                    currentSavedFiles.splice(index, 1);
+                    localStorage.setItem('bis_marcha_files', JSON.stringify(currentSavedFiles));
+                    renderSavedFilesHistory();
+                }
+            }
+        };
+
+
+        // ==========================================================================
+        // MOTOR DE EXPORTACIÓN VECTORIAL (CON FILTRADO CONDICIONAL DE TÍTULOS)
+        // ==========================================================================
+        if (btnExportPdf) {
+            btnExportPdf.addEventListener('click', async () => { 
+                const originalText = btnExportPdf.innerHTML;
+                btnExportPdf.disabled = true;
+                btnExportPdf.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> EXPORTANDO...`;
+
+                try {
+                    const { jsPDF } = window.jspdf;
+                    const pdf = new jsPDF({ orientation: 'portrait', unit: 'pt', format: 'letter' });
+
+                    const rutaLogoIzquierdo = '../IMAGENES/logobisdorado.png';
+                    const rutaLogoDerecho = '../IMAGENES/logofeccah.PNG';
+                    const rutaIconoVista = '../IMAGENES/icono_vista.png'; 
+
+                    const cargarImagen = (url) => {
+                        return new Promise((resolve, reject) => {
+                            const img = new Image();
+                            img.src = url;
+                            img.onload = () => resolve(img);
+                            img.onerror = (err) => reject(new Error(`No se pudo cargar la imagen en la ruta: ${url}`));
+                        });
+                    };
+
+                    let imgIzquierda, imgDerecha, imgVista;
+                    try {
+                        imgIzquierda = await cargarImagen(rutaLogoIzquierdo);
+                        imgDerecha = await cargarImagen(rutaLogoDerecho);
+                        imgVista = await cargarImagen(rutaIconoVista); 
+                    } catch (imageError) {
+                        console.error(imageError);
+                        throw new Error("Verifica que los archivos existan en la carpeta IMAGENES y que los nombres coincidan exactamente.");
+                    }
+
+                    for (let i = 0; i < totalPagesData.length; i++) {
+                        const pageData = totalPagesData[i];
+                        if (i > 0) pdf.addPage('letter', 'portrait');
+
+                        // ---- FONDO BLANCO ----
+                        pdf.setFillColor(255, 255, 255);
+                        pdf.rect(0, 0, 612, 792, 'F');
+
+                        // ---- LOGOS EN LAS ESQUINAS ----
+                        pdf.addImage(imgIzquierda, 'PNG', 35, 15, 65, 65);
+                        pdf.addImage(imgDerecha, 'PNG', 512, 15, 65, 65);
+
+                        // ---- ENCABEZADOS ----
+                        pdf.setTextColor(0, 0, 0);
+                        pdf.setFont("helvetica", "bold");
+                        pdf.setFontSize(16);
+                        pdf.text("BANDA INDEPENDIENTE SABÁ", 306, 45, { align: "center" });
+
+                        // Líneas estéticas
+                        pdf.setFillColor(0, 150, 255);
+                        pdf.rect(140, 52, 332, 3, 'F');
+                        pdf.setFillColor(255, 220, 0);
+                        pdf.rect(140, 55, 332, 2, 'F');
+
+                        // LÓGICA DE DETECCIÓN Y RECORTE DE TÍTULO CONDICIONAL
+                        pdf.setTextColor(255, 0, 0);
+                        pdf.setFontSize(14);
+                        
+                        let textoFinalEncabezado = pageData.title || "";
+                        if (pageData.showHeaderInPdf === 'no') {
+                            textoFinalEncabezado = "FIGURA";
+                        }
+                        
+                        pdf.text(textoFinalEncabezado, 306, 85, { align: "center" });
+
+                        // ---- VISTAS INICIO / FINAL ----
+                        pdf.setFontSize(10);
+                        pdf.setTextColor(230, 160, 0); 
+                        pdf.setFillColor(230, 160, 0);
+                        
+                        pdf.addImage(imgVista, 'PNG', 45, 167, 18, 18);
+                        pdf.text("FINAL", 68, 180);
+                        pdf.rect(68, 184, 28, 1.5, 'F'); 
+
+                        pdf.addImage(imgVista, 'PNG', 545, 727, 18, 18);
+                        pdf.text("INICIO", 540, 740, { align: "right" });
+                        pdf.rect(511, 744, 29, 1.5, 'F'); 
+
+                        // ---- SIMBOLOGÍA COMPACTA ----
+                        pdf.setDrawColor(0, 40, 120);
+                        pdf.setLineWidth(1.5);
+                        pdf.rect(35, 360, 80, 130, 'D'); 
+                        
+                        pdf.setFontSize(9); 
+                        pdf.setTextColor(0, 40, 120);
+                        pdf.text("SIMBOLOGÍA", 75, 373, { align: "center" });
+
+                        let symY = 388; 
+                        if (typeof ESCUADRAS_CONFIG !== 'undefined') {
+                            Object.keys(ESCUADRAS_CONFIG).forEach(key => {
+                                const c = ESCUADRAS_CONFIG[key];
+                                pdf.setFillColor(c.color);
+                                pdf.rect(42, symY - 6, 8, 7, 'F'); 
+                                
+                                pdf.setFontSize(7.5); 
+                                pdf.setTextColor(0, 0, 0);
+                                pdf.text(c.nombre, 55, symY);
+                                symY += 13.5; 
+                            });
+                        }
+
+                        // CONFIGURACIÓN DE MEDIDAS DE LA MATRIZ TÁCTICA
+                        const startX = 155;
+                        const startY = 150;
+                        const cellW = 16.0; 
+                        const cellH = 16.0;
+
+                        // CAPA 1: RECTÁNGULOS DE FONDO
+                        if (pageData.shapes) {
+                            pageData.shapes.forEach(shape => {
+                                const minC = Math.min(shape.start.c, shape.end.c);
+                                const minR = Math.min(shape.start.r, shape.end.r);
+                                const wCols = Math.abs(shape.end.c - shape.start.c) + 1;
+                                const hRows = Math.abs(shape.end.r - shape.start.r) + 1;
+
+                                const posX = startX + (minC * cellW);
+                                const posY = startY + (minR * cellH);
+                                const shapeW = wCols * cellW;
+                                const shapeH = hRows * cellH;
+
+                                const colors = SHAPE_COLORS_CONFIG[shape.colorKey];
+                                
+                                if (shape.hasFill && colors.fill) {
+                                    const rgbValues = colors.fill.match(/\d+/g);
+                                    if(rgbValues) {
+                                        pdf.setFillColor(parseInt(rgbValues[0]), parseInt(rgbValues[1]), parseInt(rgbValues[2]));
+                                        pdf.rect(posX, posY, shapeW, shapeH, 'F');
+                                    }
+                                }
+
+                                const rgbBorde = colors.border.match(/\d+/g);
+                                if(rgbBorde) {
+                                    pdf.setDrawColor(parseInt(rgbBorde[0]), parseInt(rgbBorde[1]), parseInt(rgbBorde[2]));
+                                    pdf.setLineWidth(2);
+                                    pdf.rect(posX, posY, shapeW, shapeH, 'D');
+                                }
+                            });
+                        }
+
+                        // CAPA 2: FICHAS TÁCTICAS
+                        pdf.setFont("helvetica", "bold");
+                        for (let r = 0; r < ROWS; r++) {
+                            for (let c = 0; c < COLS; c++) {
+                                const cellKey = `${r}-${c}`;
+                                if (pageData.cells && pageData.cells[cellKey]) {
+                                    const squad = pageData.cells[cellKey];
+                                    const conf = ESCUADRAS_CONFIG[squad];
+                                    
+                                    const posX = startX + (c * cellW);
+                                    const posY = startY + (r * cellH);
+
+                                    pdf.setFillColor(conf.color);
+                                    pdf.rect(posX, posY, cellW, cellH, 'F');
+
+                                    pdf.setFontSize(9);
+                                    pdf.setTextColor(conf.texto);
+                                    pdf.text(squad, posX + (cellW / 2), posY + (cellH / 2) + 3, { align: "center" });
+                                }
+                            }
+                        }
+
+                        // CAPA 3: TEXTO ETIQUETA HASTA EL FRENTE
+                        if (pageData.texts) {
+                            pageData.texts.forEach(txt => {
+                                const posX = startX + (txt.c * cellW) + (cellW / 2);
+                                const posY = startY + (txt.r * cellH) + (cellH / 2) + 2;
+
+                                pdf.setFillColor(255, 255, 255);
+                                pdf.setDrawColor(200, 200, 200);
+                                pdf.setLineWidth(0.5);
+                                
+                                const textW = pdf.getTextWidth(txt.content) + 6;
+                                pdf.rect(posX - (textW / 2), posY - 10, textW, 13, 'FD');
+
+                                pdf.setFontSize(8);
+                                pdf.setTextColor(0, 0, 0);
+                                pdf.text(txt.content, posX, posY, { align: "center" });
+                            });
+                        }
+                    }
+
+                    pdf.save(`Plan_De_Marcha_${Date.now()}.pdf`);
+
+                } catch (err) {
+                    console.error("Error en la generación del PDF:", err);
+                    alert("Error al compilar el documento: " + err.message);
+                } finally {
+                    btnExportPdf.disabled = false;
+                    btnExportPdf.innerHTML = originalText;
+                }
+            });
+        }
+    </script>
+</body>
+</html>

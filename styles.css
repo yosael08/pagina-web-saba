@@ -1,0 +1,92 @@
+/* ==========================================================================
+   ESTILOS GENERALES DE LA INTERFAZ DE USUARIO
+   ========================================================================== */
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+h1 {
+    text-shadow: 2px 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.3s ease-out forwards;
+}
+
+/* ==========================================================================
+   SISTEMA DE GENERACIÓN INDEPENDIENTE PARA RENDERING DE PDF (FONDO BLANCO NATIVO)
+   ========================================================================== */
+#pdf-render-engine {
+    position: absolute;
+    left: -9999px;
+    top: -9999px;
+    width: 612px;  /* Proporción exacta en puntos (pt) para una hoja Carta (Letter: 612x792) */
+    height: 792px;
+    overflow: hidden;
+}
+
+.pdf-page-blueprint {
+    position: relative;
+    width: 612px;
+    height: 792px;
+    background-color: #ffffff; /* Reemplaza por completo cualquier dependencia de imagen externa */
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+/* Título dinámico azul perfectamente centrado en la parte superior del reporte */
+.pdf-dynamic-title {
+    position: absolute;
+    top: 50px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    font-size: 22px;
+    font-weight: 900;
+    color: #0033ff;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    z-index: 10;
+}
+
+/* Lienzo táctico con cuadrícula visible integrada directamente en el documento generado */
+.pdf-tactical-canvas {
+    display: grid;
+    grid-template-columns: repeat(30, minmax(0, 1fr));
+    grid-template-rows: repeat(24, minmax(0, 1fr));
+    gap: 1px; /* Espaciado que actúa como líneas de división grises */
+    position: absolute;
+    top: 140px;       /* Margen superior fijo y equilibrado */
+    left: 54px;       /* Centrado simétrico horizontal: (612px de ancho - 504px de cuadrícula) / 2 */
+    width: 504px;     /* Ancho exacto del lienzo táctico */
+    height: 403px;    /* Alto exacto manteniendo la proporción de las celdas */
+    background-color: #cbd5e1; /* Color de fondo gris para definir la cuadrícula */
+    border: 1px solid #cbd5e1;
+    z-index: 20;
+    box-sizing: border-box;
+}
+
+/* Fichas y Músicos posicionados de forma limpia dentro del reporte PDF */
+.pdf-token-cell {
+    aspect-ratio: 1 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Poppins', sans-serif;
+    font-size: 8px;
+    font-weight: 900;
+    background-color: #ffffff; /* Celdas vacías por defecto en blanco */
+    box-sizing: border-box;
+    text-align: center;
+}
