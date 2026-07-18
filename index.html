@@ -58,7 +58,7 @@
             <a href="#historia" class="hover:text-amber-400 transition-colors duration-300 text-sm">Historia</a>
             <a href="#logros" class="hover:text-amber-400 transition-colors duration-300 text-sm">Trayectoria</a>
             <a href="#multimedia" class="hover:text-amber-400 transition-colors duration-300 text-sm">Galería</a>
-            <a href="#comunicados" class="hover:text-amber-400 transition-colors duration-300 text-sm">Noticias</a>
+            <a href="noticias.html" class="hover:text-amber-400 transition-colors duration-300 text-sm">Noticias</a>
 
             <div class="h-4 w-[1px] bg-white/20"></div>
 
@@ -89,7 +89,7 @@
         <a href="#historia" class="text-white hover:text-amber-400 py-2 close-menu">Historia</a>
         <a href="#logros" class="text-white hover:text-amber-400 py-2 close-menu">Trayectoria</a>
         <a href="#multimedia" class="text-white hover:text-amber-400 py-2 close-menu">Galería</a>
-        <a href="#comunicados" class="text-white hover:text-amber-400 py-2 close-menu">Noticias</a>
+        <a href="noticias.html" class="text-white hover:text-amber-400 py-2 close-menu">Noticias</a>
 
         <a href="MODULOS/index.html" class="text-amber-400 py-3 font-extrabold flex items-center justify-center gap-2 border border-white/10 rounded-xl bg-white/5 backdrop-blur-sm">
             <div class="relative">
@@ -703,16 +703,16 @@
         </div>
     </footer>
 
-    <!-- MODAL DE CONFIGURACIÓN (LOGIN) -->
+    <!-- MODAL DE CONFIGURACIÓN / PANEL ADMINISTRATIVO DE COMUNICADOS -->
     <div id="config-modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-sm">
-        <div class="relative w-full max-w-md bg-white rounded-3xl shadow-2xl">
+        <div class="relative w-full max-w-4xl max-h-[92vh] overflow-y-auto bg-white rounded-3xl shadow-2xl">
             <button type="button" id="config-close-btn" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-slate-100 hover:bg-red-100 text-slate-500 hover:text-red-600 flex items-center justify-center transition-all z-10">
                 <i class="fa-solid fa-xmark"></i>
             </button>
 
             <!-- VISTA DE LOGIN -->
             <div id="config-login-view" class="p-8 sm:p-10">
-                <div class="text-center">
+                <div class="text-center max-w-sm mx-auto">
                     <div class="w-16 h-16 bg-blue-50 text-[#0033ff] rounded-2xl flex items-center justify-center mx-auto mb-5 shadow-md">
                         <i class="fa-solid fa-gear text-3xl"></i>
                     </div>
@@ -745,16 +745,122 @@
                 </div>
             </div>
 
-            <!-- VISTA TRAS INICIAR SESIÓN (PLACEHOLDER, EL GESTOR DE PUBLICACIONES SE AGREGA EN UN PASO POSTERIOR) -->
-            <div id="config-app-view" class="hidden p-8 sm:p-10 text-center">
-                <div class="w-16 h-16 bg-emerald-50 text-emerald-500 rounded-2xl flex items-center justify-center mx-auto mb-5 shadow-md">
-                    <i class="fa-solid fa-circle-check text-3xl"></i>
+            <!-- VISTA DEL PANEL (TRAS INICIAR SESIÓN) -->
+            <div id="config-app-view" class="hidden p-6 sm:p-8">
+                <div class="flex flex-wrap items-center justify-between gap-3 mb-6 pb-6 border-b border-slate-100">
+                    <h2 class="font-extrabold text-lg text-slate-900 flex items-center gap-2 uppercase tracking-wide">
+                        <i class="fa-solid fa-newspaper text-[#0033ff]"></i> Gestor de Publicaciones
+                    </h2>
+                    <div class="flex items-center gap-2 flex-wrap">
+                        <button type="button" id="btn-view-create" class="text-xs font-bold px-4 py-2 rounded-lg transition-all bg-[#0033ff] text-white shadow-md">
+                            <i class="fa-solid fa-pen-nib"></i> Nueva Publicación
+                        </button>
+                        <button type="button" id="btn-view-history" class="text-xs font-bold px-4 py-2 rounded-lg transition-all bg-slate-100 text-slate-600 hover:bg-slate-200">
+                            <i class="fa-solid fa-clock-rotate-left"></i> Ver Artículos Publicados
+                        </button>
+                        <button type="button" id="config-logout-btn" class="text-xs bg-red-50 hover:bg-red-600 border border-red-200 hover:border-red-600 text-red-600 hover:text-white px-3 py-2 rounded-lg transition-all font-bold flex items-center gap-1">
+                            <i class="fa-solid fa-power-off"></i> Salir
+                        </button>
+                    </div>
                 </div>
-                <h2 class="text-xl font-black text-slate-900 uppercase tracking-tight">Sesión Iniciada</h2>
-                <p class="text-sm text-slate-500 mt-2 leading-relaxed">Próximamente aquí podrás gestionar tus publicaciones (crear, modificar y eliminar comunicados).</p>
-                <button type="button" id="config-logout-btn" class="mt-6 w-full bg-red-50 hover:bg-red-600 border border-red-200 hover:border-red-600 text-red-600 hover:text-white px-3 py-2.5 rounded-xl transition-all font-bold flex items-center justify-center gap-2 text-sm">
-                    <i class="fa-solid fa-power-off"></i> Cerrar Sesión
-                </button>
+
+                <!-- CONEXIÓN CON GITHUB (NECESARIA PARA QUE LOS CAMBIOS SEAN REALES Y COMPARTIBLES) -->
+                <div class="mb-6 bg-slate-50 border border-slate-200 rounded-xl p-4">
+                    <div class="flex items-center gap-2 mb-2">
+                        <i class="fa-brands fa-github text-slate-700"></i>
+                        <span class="text-xs font-bold text-slate-700 uppercase tracking-wide">Conexión con GitHub</span>
+                        <span id="gh-token-status" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-red-100 text-red-600">Sin conectar</span>
+                    </div>
+                    <p class="text-[11px] text-slate-500 mb-3 leading-relaxed">
+                        Necesitas un <strong>Personal Access Token</strong> de GitHub (con permiso de escritura sobre este repositorio) para que tus publicaciones se guarden de forma real y los enlaces funcionen para cualquier persona. Crea uno en
+                        <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" class="underline font-semibold text-[#0033ff]">github.com/settings/personal-access-tokens</a>,
+                        limitado solo a este repositorio con permiso "Contents: Read and write". Se guarda únicamente en este navegador; no lo compartas ni lo uses en equipos públicos.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-2">
+                        <input type="password" id="gh-token-input" placeholder="Pega aquí tu token de GitHub (ghp_... o github_pat_...)" class="flex-grow p-2.5 bg-white border border-slate-200 rounded-lg text-xs focus:outline-none focus:border-[#0033ff]">
+                        <button type="button" id="gh-token-save-btn" class="bg-slate-800 hover:bg-slate-900 text-white font-bold px-4 py-2 rounded-lg text-xs transition-all">Guardar Token</button>
+                        <button type="button" id="gh-token-clear-btn" class="bg-red-50 hover:bg-red-100 text-red-600 font-bold px-4 py-2 rounded-lg text-xs transition-all">Quitar</button>
+                    </div>
+                </div>
+
+                <!-- VISTA: CREAR / EDITAR PUBLICACIÓN -->
+                <div id="panel-create-view">
+                    <div id="editing-banner" class="hidden mb-4 text-xs font-bold bg-amber-50 border border-amber-200 text-amber-700 px-4 py-2.5 rounded-xl flex items-center gap-2">
+                        <i class="fa-solid fa-pen"></i> Editando una publicación existente. Los cambios reemplazarán al artículo original.
+                    </div>
+                    <form id="post-form" class="grid md:grid-cols-2 gap-6">
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-500 uppercase mb-1.5">Título de la Publicación</label>
+                                <input type="text" id="post-title" required maxlength="90" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold focus:outline-none focus:border-[#0033ff]" placeholder="Ej: Nuevo comunicado oficial">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-500 uppercase mb-1.5">Cuerpo / Contenido</label>
+                                <textarea id="post-body" required rows="6" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-[#0033ff] resize-none" placeholder="Escribe aquí el contenido de la noticia..."></textarea>
+                            </div>
+                            <div class="grid grid-cols-2 gap-3">
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1.5">Grosor de Fuente</label>
+                                    <select id="post-font-weight" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold focus:outline-none focus:border-[#0033ff]">
+                                        <option value="300">Poppins Light</option>
+                                        <option value="400" selected>Poppins Regular</option>
+                                        <option value="500">Poppins Medium</option>
+                                        <option value="600">Poppins SemiBold</option>
+                                        <option value="700">Poppins Bold</option>
+                                        <option value="800">Poppins ExtraBold</option>
+                                        <option value="900">Poppins Black</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1.5">Color de Letra</label>
+                                    <input type="color" id="post-font-color" value="#1e293b" class="w-full h-[42px] p-1 bg-slate-50 border border-slate-200 rounded-xl cursor-pointer">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-500 uppercase mb-1.5">Imagen (Opcional)</label>
+                                <input type="file" id="post-image" accept="image/*" class="w-full text-xs text-slate-600 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-blue-50 file:text-[#0033ff] hover:file:bg-blue-100 cursor-pointer border border-slate-200 rounded-xl bg-slate-50 p-1.5">
+                                <div class="flex items-center gap-2 mt-2">
+                                    <span class="text-[11px] font-bold text-slate-400 uppercase">Tamaño</span>
+                                    <select id="post-image-size" class="flex-grow p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs font-semibold focus:outline-none focus:border-[#0033ff]">
+                                        <option value="small">Pequeña</option>
+                                        <option value="medium" selected>Mediana</option>
+                                        <option value="large">Grande</option>
+                                    </select>
+                                    <button type="button" id="post-image-remove" class="hidden text-[11px] font-bold text-red-500 hover:text-red-700 px-2">Quitar</button>
+                                </div>
+                                <div id="post-image-preview-wrap" class="hidden mt-3 bg-slate-50 border border-slate-200 rounded-xl p-3 text-center">
+                                    <img id="post-image-preview" class="mx-auto rounded-lg max-h-40 object-contain" alt="Vista previa de la imagen">
+                                </div>
+                            </div>
+
+                            <div>
+                                <span class="block text-xs font-bold text-slate-500 uppercase mb-1.5">Vista Previa en Vivo</span>
+                                <div class="bg-white border border-slate-200 rounded-xl p-4 shadow-inner min-h-[140px]">
+                                    <h3 id="preview-post-title" class="text-slate-400 text-sm mb-2">El título aparecerá aquí</h3>
+                                    <p id="preview-post-body" class="text-slate-400 text-xs leading-relaxed whitespace-pre-line">El cuerpo del texto aparecerá aquí con el estilo elegido.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="md:col-span-2 flex flex-col sm:flex-row gap-3 pt-2 border-t border-slate-100 mt-2">
+                            <button type="submit" id="btn-publish-post" class="flex-1 bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white font-black py-3.5 px-4 rounded-xl text-sm shadow-lg transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-cloud-arrow-up"></i> Publicar
+                            </button>
+                            <button type="button" id="btn-cancel-post" class="flex-1 sm:flex-none sm:px-8 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold py-3.5 px-4 rounded-xl text-sm transition-all flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-xmark"></i> Cancelar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- VISTA: HISTORIAL DE ARTÍCULOS PUBLICADOS -->
+                <div id="panel-history-view" class="hidden">
+                    <div id="history-list" class="space-y-3"></div>
+                    <p id="history-empty" class="hidden text-center text-slate-400 italic py-10 text-sm">No has publicado ningún artículo todavía.</p>
+                </div>
             </div>
         </div>
     </div>
@@ -779,58 +885,9 @@
                 mobileMenu.classList.add('hidden');
             });
         });
-
-        // ==================================================================
-        // PANEL DE CONFIGURACIÓN: LOGIN (el gestor de publicaciones se agrega en un paso posterior)
-        // ==================================================================
-        (function () {
-            const CREDENTIALS = { user: 'denis', pass: 'denis2026' };
-
-            const configModal = document.getElementById('config-modal');
-            const configOpenBtns = document.querySelectorAll('.config-open-trigger');
-            const configCloseBtn = document.getElementById('config-close-btn');
-            const configLoginView = document.getElementById('config-login-view');
-            const configAppView = document.getElementById('config-app-view');
-            const configLoginForm = document.getElementById('config-login-form');
-            const configLoginError = document.getElementById('config-login-error');
-            const configLogoutBtn = document.getElementById('config-logout-btn');
-
-            if (!configModal || !configLoginForm) return;
-
-            configOpenBtns.forEach(btn => btn.addEventListener('click', () => {
-                configModal.classList.remove('hidden');
-                document.body.style.overflow = 'hidden';
-                mobileMenu.classList.add('hidden');
-            }));
-
-            function closeConfigModal() {
-                configModal.classList.add('hidden');
-                document.body.style.overflow = '';
-            }
-            configCloseBtn.addEventListener('click', closeConfigModal);
-            configModal.addEventListener('click', (e) => {
-                if (e.target === configModal) closeConfigModal();
-            });
-
-            configLoginForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                const user = document.getElementById('config-username').value.trim();
-                const pass = document.getElementById('config-password').value;
-                if (user === CREDENTIALS.user && pass === CREDENTIALS.pass) {
-                    configLoginView.classList.add('hidden');
-                    configAppView.classList.remove('hidden');
-                    configLoginError.classList.add('hidden');
-                    configLoginForm.reset();
-                } else {
-                    configLoginError.classList.remove('hidden');
-                }
-            });
-
-            configLogoutBtn.addEventListener('click', () => {
-                configAppView.classList.add('hidden');
-                configLoginView.classList.remove('hidden');
-            });
-        })();
     </script>
+
+    <!-- PANEL DE CONFIGURACIÓN (LOGIN + GESTOR DE COMUNICADOS): LÓGICA COMPARTIDA CON noticias.html -->
+    <script src="config-panel.js"></script>
 </body>
 </html>
